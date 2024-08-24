@@ -47,7 +47,7 @@ export function falar(frase: string) {
         cont.value++
 
         // setando localStorage para nao ser executado o audio novamente durante um periodo estipulado
-        const tempoExpiracaoEmSegundos = 5; // 5 segundos de intervalo para execucao dos audios
+        const tempoExpiracaoEmSegundos = 2; // 5 segundos de intervalo para execucao dos audios
         const agora = new Date().getTime();
         const expiracao = agora + tempoExpiracaoEmSegundos * 1000; // Tempo em milissegundos
         const valor = 'falando';
