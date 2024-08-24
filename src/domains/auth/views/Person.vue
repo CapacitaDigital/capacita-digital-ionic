@@ -4,15 +4,8 @@ import { useRouter } from 'vue-router';
 import { signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth';
 import { ref } from 'vue'
 import Buzina from '@/domains/auth/components/Buzina.vue'
-
+import { falar } from '@/utils/utils';
 const frase = ref('ÁreaDoConhecimento');
-
-const falar = (frase: string) => {
-    const audio = new Audio(`/audio/${frase}.mp3`);
-    audio.play().catch(error => {
-        console.error('Erro ao reproduzir o áudio:', error);
-    });
-};
 
 </script>
 

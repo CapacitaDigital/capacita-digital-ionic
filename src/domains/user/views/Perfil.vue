@@ -4,7 +4,8 @@ import NavBotton from "@/domains/portuguese/components/NavBotton.vue";
 import Card from "@/domains/user/components/Card.vue";
 import HeaderPerfil from "@/domains/auth/components/HeaderPerfil.vue";
 import FormPerfil from "@/domains/auth/components/FormPerfil.vue";
-
+import Buzina from '@/domains/auth/components/Buzina.vue';
+import { falar } from '@/utils/utils';
 import { speakText, speek } from "@/domains/portuguese/services/fala";
 
 </script>

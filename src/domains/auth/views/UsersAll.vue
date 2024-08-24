@@ -3,15 +3,8 @@ import { IonContent, IonPage, IonGrid, IonRow, IonCol } from '@ionic/vue';
 import { useRouter } from 'vue-router';
 import Users from '@/domains/auth/components/Users.vue';
 import { defineComponent, ref,onMounted } from 'vue';
-
+import { falar } from '@/utils/utils';
 const frase = ref('ÁreaDoConhecimento');
-
-const falar = (frase: string) => {
-    const audio = new Audio(`/audio/${frase}.mp3`);
-    audio.play().catch(error => {
-        console.error('Erro ao reproduzir o áudio:', error);
-    });
-};
 
 const router = useRouter();
 

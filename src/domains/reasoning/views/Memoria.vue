@@ -7,7 +7,7 @@ import AttHeader from '../components/AttHeader.vue';
 import GameCircle from '../components/GameCircle.vue';
 import ButtonMemoria from '../components/ButtonMemoria.vue';
 import NavBotton from '../../portuguese/components/NavBotton.vue';
-
+import { falar } from '@/utils/utils';
 let sequenciaUsuario = ref<number[]>([]);
 let roundAtual = ref(0);
 

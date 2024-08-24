@@ -6,7 +6,7 @@ import { exercise } from "../../portuguese/services/attEscrita.js";
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
 import Header from '@/domains/reasoning/components/Header.vue';
 import AttEscrita from "@/domains/portuguese/components/AttEscrita.vue";
-
+import { falar } from '@/utils/utils';
 let itemArray = ref(0);
 
 let att = ref(exercise[itemArray.value]);

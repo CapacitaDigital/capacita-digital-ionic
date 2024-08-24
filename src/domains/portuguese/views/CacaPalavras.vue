@@ -5,7 +5,7 @@ import NavBotton from "@/domains/portuguese/components/NavBotton.vue";
 import Quadro from "@/domains/portuguese/components/Quadro.vue";
 import { Portugues, portugues } from "../store/cacaPalavras";
 import { ref } from 'vue'
-
+import { falar } from '@/utils/utils';
 const frase = ref('CaçaPalavras');
 
 const { frame, words } = portugues[0];

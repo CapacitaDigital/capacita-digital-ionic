@@ -2,7 +2,7 @@
 import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonInput, IonButton } from '@ionic/vue';
 import { ref } from 'vue';
 import { routeLocationKey, useRouter } from 'vue-router';
-
+import { falar } from '@/utils/utils';
 const router = useRouter();
 
 const username = ref('');

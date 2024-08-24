@@ -4,16 +4,11 @@ import HeaderLevels from '@/domains/portuguese/components/HeaderLevels.vue';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
 import CardLevels from '@/domains/user/components/CardLevels.vue';
 import { ref } from 'vue'
-import Buzina from "@/domains/auth/components/Buzina.vue"
-
+import Buzina from '@/domains/auth/components/Buzina.vue';
+import { falar } from '@/utils/utils';
 const frase = ref('SelecionarAtividade');
 
-const falar = (frase: string) => {
-    const audio = new Audio(`/audio/${frase}.mp3`);
-    audio.play().catch(error => {
-        console.error('Erro ao reproduzir o áudio:', error);
-    });
-};
+
 
 </script>
 

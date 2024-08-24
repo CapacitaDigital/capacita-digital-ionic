@@ -9,6 +9,7 @@ import AttEscrita from "@/domains/portuguese/components/AttEscrita.vue";
 import { speakText , speek } from '../services/fala.js';
 import { useRouter } from 'vue-router';
 import Buzina from '@/domains/auth/components/Buzina.vue'
+import { falar } from '@/utils/utils';
 import HeaderLevels from '../components/HeaderLevels.vue';
 
 const frase = ref('null');
@@ -46,6 +47,10 @@ function attNext () {
     emit('nextAtt', next);
 }
 
+
+function emit(arg0: string, next: boolean) {
+    throw new Error('Function not implemented.');
+}
 </script>
 
 <template>
