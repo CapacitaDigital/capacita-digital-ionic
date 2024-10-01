@@ -1,54 +1,32 @@
 <script setup lang="ts">
 import { IonContent, IonPage, IonGrid, IonRow, IonCol } from '@ionic/vue';
 import { useRouter } from 'vue-router';
-import { Auth } from 'firebase/auth'; // Import the Auth object from 'firebase/auth'
-import { signInWithRedirect, getRedirectResult, onAuthStateChanged } from 'firebase/auth';
 
 const router = useRouter();
 
-// function signInWithGoogleRedirect() {
-//   signInWithRedirect(auth, provider)
-//     .then(() => {
-//       console.log("Redirecionando para o Google Sign-In");
-//     })
-//     .catch(error => {
-//       console.error("Erro na autenticação com o Google: ", error);
-//     });
-// }
-
-async function sendUserToAPI(user: any) {
+async function getUser() {
     const response = await fetch('http://127.0.0.1:5245/api/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: user.email,
-        username: user.displayName,
-        photoURL: user.photoURL,
-        password:"password"
-      }),
+        method: 'GET',
+        headers: {
+            'accept': 'application/json',
+        },
     });
 }
 
-// onAuthStateChanged(auth, async (user) => {
-//   if (user) {
-//     console.log('User info:', user);
-//     await sendUserToAPI(user); 
-//     // router.push('/home');
-//   } else {
-//     try {
-//       const result = await getRedirectResult(auth);
-//       if (result) {
-//         console.log('User info:', result.user);
-//         await sendUserToAPI(result.user); 
-//         // router.push('/home');
-//       }
-//     } catch (error) {
-//       console.error("Erro ao obter o resultado de redirecionamento: ", error);
-//     }
-//   }
-// });
+async function sendUserToAPI(user: any) {
+    const response = await fetch('http://127.0.0.1:5245/api/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: user.displayName,
+            email: user.email,
+            userType: 'Student'
+        }),
+    });
+}
+
 </script>
 
 <template>
@@ -68,23 +46,23 @@ async function sendUserToAPI(user: any) {
                     </ion-col>
                 </ion-row>
             </ion-grid>
-        <ion-grid>
-            <ion-row class="buttons">
-                <div class="submit">
-                    <RouterLink class="route" to="/register">Inscreva-se gratuitamente</RouterLink>
-                </div>
-                <div class="google">
-                    <img src="img/googlecor.svg">
-                    <button >Continuar com o Google</button>
-                </div>
-                <div class="login">
-                    <RouterLink class="route" to="/professor">Entrar</RouterLink>
-                </div>
-            </ion-row>
-            <ion-row>
-            <div class="input"></div>
-            </ion-row>
-        </ion-grid>
+            <ion-grid>
+                <ion-row class="buttons">
+                    <div class="submit">
+                        <RouterLink class="route" to="/register">Inscreva-se gratuitamente</RouterLink>
+                    </div>
+                    <div class="google">
+                        <img src="img/googlecor.svg">
+                        <button>Continuar com o Google</button>
+                    </div>
+                    <div class="login">
+                        <RouterLink class="route" to="/professor">Entrar</RouterLink>
+                    </div>
+                </ion-row>
+                <ion-row>
+                    <div class="input"></div>
+                </ion-row>
+            </ion-grid>
         </ion-content>
     </ion-page>
 </template>
@@ -107,7 +85,7 @@ async function sendUserToAPI(user: any) {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6),  rgba(0, 0, 0, 1),  rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
     z-index: -1;
 }
 
@@ -155,7 +133,8 @@ async function sendUserToAPI(user: any) {
     border-radius: 5px;
 }
 
-.submit .route, .login .route {
+.submit .route,
+.login .route {
     color: azure;
     font-weight: bold;
 }
@@ -196,5 +175,4 @@ async function sendUserToAPI(user: any) {
     border-radius: 5px;
     border: solid 2px #1E1F24;
 }
-
 </style>

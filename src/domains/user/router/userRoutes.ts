@@ -3,12 +3,18 @@ import HomePage from '../views/Home.vue';
 import PerfilPage from '../views/Perfil.vue';
 import Modulo from '../views/Modulo.vue';
 import RoadMap from '../views/RoadMap.vue';
+import CreateCategory from '../views/CategoriaCreate.vue';
 
 const userRoutes: Array<RouteRecordRaw> = [
     {
         path: '/home',
         name: 'Home',
         component: HomePage
+    },
+    {   
+        path: '/categoria/create',
+        name: 'CreateCategory',
+        component: CreateCategory
     },
     {
         path: '/perfil',
@@ -25,6 +31,6 @@ const userRoutes: Array<RouteRecordRaw> = [
       name: 'RoadMap',
       component: RoadMap
     }
-]
+];
 
 export default userRoutes;

@@ -12,14 +12,19 @@ const users = ref([]);
 
 const fetchUsers = async () => {
     try {
-        const response = await fetch('http://127.0.0.1:5245/api/user/all');
+        const response = await fetch('http://localhost:5158/api/users',{
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+        });
         if (!response.ok) {
             throw new Error('Erro')
         }
         const data = await response.json();
+        console.log(data);
         users.value = data;
     } catch (error) {
-        console.error('hii')
     }
 }
 
@@ -36,14 +41,14 @@ onMounted(() => {
             </div>
             <div class="back"></div>
             <ion-grid>
-                <!-- <div v-for="user in users" :key="user.id" class="card">
-                    <Users :title="user.username" image="../../public/img/idoso.png" link="/home" :user="user"
-                        atividade="teste" />
-                </div> -->
-                <div class="card" @click="falar(frase)" >
-                    <Users title="Jamerson" image="../../public/img/idoso.png" link="/home" :user="{}"
+                <div v-for="user in users" :key="user.id" class="card">
+                    <Users :title="user.name" image="../../public/img/idoso.png" link="/home" :user="user"
                         atividade="teste" />
                 </div>
+                <!-- <div class="card" @click="falar(frase)" >
+                    <Users title="Jamerson" image="../../public/img/idoso.png" link="/home" :user="{}"
+                        atividade="teste" />
+                </div> -->
             </ion-grid>
         </ion-content>
     </ion-page>

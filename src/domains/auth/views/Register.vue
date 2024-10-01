@@ -5,43 +5,48 @@ import { routeLocationKey, useRouter } from 'vue-router';
 import { falar } from '@/utils/utils';
 const router = useRouter();
 
-const username = ref('');
+const name = ref('');
 const email = ref('');
 const password = ref('');
+const userType = ref('');
 
 const registerUser = async () => {
     const user = {
-        displayName: username.value,
-        email: email.value,
-        password: password.value,
-        photoURL: ''
+        Name: name.value,
+        Email: email.value,
+        Password: password.value,
+        UserType: userType.value,
     };
 
     await sendUserToAPI(user);
 };
-
-const sendUserToAPI = async (user: { email: string, displayName: string, photoURL: string, password: string }) => {
+const sendUserToAPI = async (user: {
+    Email: string,
+    Name: string,
+    Password: string,
+    UserType: string
+}) => {
     try {
-        const response = await fetch('http://127.0.0.1:5245/api/user', {
+        const response = await fetch('http://localhost:5158/api/users/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify({
-                email: user.email,
-                username: user.displayName,
-                photoURL: user.photoURL,
-                password: user.password,
-            }),
+            body: JSON.stringify(user),
         });
-        const data = await response.json();
-        console.log(data);
-        // router.push({ name: 'Login', params: { user: data } });
-        router.push("/login")
 
+
+        // Verifique se a resposta está vazia
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+        }
+
+        const data = await response.json();
+        router.push({ name: 'Login' });
     } catch (error) {
-        console.error(error);
-        router.push("/login")
+        console.error('Erro ao enviar usuário para a API:', error);
     }
 };
 
@@ -64,18 +69,24 @@ const sendUserToAPI = async (user: { email: string, displayName: string, photoUR
                     </ion-col>
                 </ion-row>
             </ion-grid>
-        <ion-grid>
-            <ion-row class="content">
-                <ion-col class="register">
-                    <ion-input v-model="username" label="Nome de usuário" label-placement="floating" fill="outline" placeholder="Seu nome" class="input" color="tertiary"></ion-input>
-                    <ion-input v-model="email" label="E-mail" label-placement="floating" fill="outline" placeholder="meuemail@gmail.com" class="input" color="tertiary"></ion-input>
-                    <ion-input v-model="password" label="Senha" label-placement="floating" fill="outline" placeholder="Sua senha" class="input" color="tertiary"></ion-input>
-                </ion-col>               
-                <div class="login">
-                    <ion-button @click="registerUser" class="route">Registrar</ion-button>
-                </div>
-            </ion-row>
-        </ion-grid>
+            <ion-grid>
+                <ion-row class="content">
+                    <ion-col class="register">
+                        <ion-input v-model="name" label="Nome de usuário" label-placement="floating" fill="outline"
+                            placeholder="Seu nome" class="input" color="tertiary"></ion-input>
+                        <ion-input v-model="email" label="E-mail" label-placement="floating" fill="outline"
+                            placeholder="meuemail@gmail.com" class="input" color="tertiary"></ion-input>
+                        <ion-input v-model="password" label="Senha" label-placement="floating" fill="outline"
+                            placeholder="Sua senha" class="input" color="tertiary"></ion-input>
+
+                        <ion-input v-model="userType" label="text" label-placement="floating" fill="outline"
+                            placeholder="tipo de usuario" class="input" color="tertiary"></ion-input>
+                    </ion-col>
+                    <div class="login">
+                        <ion-button @click="registerUser" class="route">Registrar</ion-button>
+                    </div>
+                </ion-row>
+            </ion-grid>
         </ion-content>
     </ion-page>
 </template>
@@ -98,7 +109,7 @@ const sendUserToAPI = async (user: { email: string, displayName: string, photoUR
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6),  rgba(0, 0, 0, 1),  rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
     z-index: -1;
 }
 
@@ -189,5 +200,4 @@ const sendUserToAPI = async (user: { email: string, displayName: string, photoUR
     color: azure;
     font-weight: bold;
 }
-
 </style>

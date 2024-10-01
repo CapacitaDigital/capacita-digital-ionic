@@ -2,13 +2,37 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
 import Card from '@/domains/user/components/Card.vue';
+import CardEmpty from '@/domains/user/components/CardEmpty.vue';
 import Header from '@/domains/reasoning/components/Header.vue';
-import { ref } from 'vue'
-import Buzina from '@/domains/auth/components/Buzina.vue'
+import { ref, onMounted } from 'vue';
+import Buzina from '@/domains/auth/components/Buzina.vue';
 import { falar } from '@/utils/utils';
 
 const frase = ref('SeleçãoTema');
+const categorias = ref([]);
 
+const fetchCategorias = async () => {
+  try {
+    const response = await fetch('http://localhost:5158/api/categories/', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json'
+      },
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data);
+    categorias.value = data;
+  } catch (error) {
+    console.error('Erro ao buscar categorias:', error);
+  }
+};
+
+onMounted(() => {
+  fetchCategorias();
+});
 </script>
 
 <template>
@@ -17,19 +41,15 @@ const frase = ref('SeleçãoTema');
       <div>
         <Header color="#249B9B" />
         <Buzina :frase="frase" />
-
       </div>
 
       <div id="container">
-        <Card @click="falar(frase)" title="Português" image="img/curuja.png" link="/home?q=pt" link2="/att/modulo"
-          bgc="#66FF7E" />
-        <Card @click="falar(frase)" title="Raciocínio Lógico" image="img/curuja.png" link="/home?q=rl"
-          link2="/att/rl/memoria" bgc="#F6A9CB" />
-        <Card @click="falar(frase)" title="Matemática" image="img/curuja.png" link="/home?q=mat" link2="/att/mat"
-          bgc="#59CAFC" />
-        <Card @click="falar(frase)" title="Tecnologia" image="img/curuja.png" link="/home?q=tec" link2="/att/tec"
-          bgc="#F07979" />
+        <Card v-for="categoria in categorias" :id="categoria.id"  :name="categoria.name"
+          :description="categoria.description" :status="categoria.status" :userId="categoria.userId" :urlImage="categoria.urlImage" />
+          <CardEmpty message="Criar categoria"  />
       </div>
+
+
     </ion-content>
     <div id="navButton">
       <NavBotton />
