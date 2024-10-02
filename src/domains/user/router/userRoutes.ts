@@ -4,6 +4,7 @@ import PerfilPage from '../views/Perfil.vue';
 import Modulo from '../views/Modulo.vue';
 import RoadMap from '../views/RoadMap.vue';
 import CreateCategory from '../views/CategoriaCreate.vue';
+import EditCategory from '../views/CategoriaEdit.vue';
 
 const userRoutes: Array<RouteRecordRaw> = [
     {
@@ -15,6 +16,11 @@ const userRoutes: Array<RouteRecordRaw> = [
         path: '/categoria/create',
         name: 'CreateCategory',
         component: CreateCategory
+    },
+    {   
+        path: '/categoria/edit:id/:name/:description/:status/:userId',
+        name: 'EditCategory',
+        component: EditCategory,
     },
     {
         path: '/perfil',

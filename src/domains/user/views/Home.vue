@@ -9,7 +9,16 @@ import Buzina from '@/domains/auth/components/Buzina.vue';
 import { falar } from '@/utils/utils';
 
 const frase = ref('SeleçãoTema');
-const categorias = ref([]);
+interface Categoria {
+  id: number;
+  name: string;
+  description: string;
+  status: string;
+  userId: number;
+  urlImage: string;
+}
+
+const categorias = ref<Categoria[]>([]);
 
 const fetchCategorias = async () => {
   try {
@@ -44,8 +53,8 @@ onMounted(() => {
       </div>
 
       <div id="container">
-        <Card v-for="categoria in categorias" :id="categoria.id"  :name="categoria.name"
-          :description="categoria.description" :status="categoria.status" :userId="categoria.userId" :urlImage="categoria.urlImage" />
+        <Card v-for="categoria in categorias" :id="categoria.id.toString()"  :name="categoria.name"
+          :description="categoria.description" :status="categoria.status" :userId="categoria.userId.toString()" :urlImage="categoria.urlImage" />
           <CardEmpty message="Criar categoria"  />
       </div>
 

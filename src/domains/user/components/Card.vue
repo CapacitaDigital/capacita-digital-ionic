@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
-import { RouterLink, useRouter  } from "vue-router";
+import { RouterLink } from "vue-router";
 
 export default defineComponent({
   props: {
@@ -29,12 +29,10 @@ export default defineComponent({
       required: true,
     }
   },
-  setup(props, { emit, useRouter}) {
+  setup(props, { emit }) {
 
     const deleteCategory = async () => {
-
       try {
-
         const response = await fetch(`http://localhost:5158/api/categories/${props.id}`, {
           method: 'DELETE',
         });
@@ -44,7 +42,6 @@ export default defineComponent({
         }
 
         console.log('Categoria deletada com sucesso');
-        // Aqui você pode adicionar lógica para atualizar a UI após a exclusão
         emit('categoryDeleted', props.id); // Emite o evento com o ID da categoria excluída
         window.location.reload(); // Recarrega a página
       } catch (error) {
@@ -66,17 +63,32 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="container" :style="{ backgroundColor: '#f2f2f2' }">
-    <RouterLink class="button">
+  <div class="container">
+    <RouterLink :to="{ name: 'Home' }" class="button">
       <div id="figura">
-        <img :src="urlImage" alt="">
+        <img :src="'http://localhost:5158' + urlImage" alt="">
       </div>
-      <div>
+      <div class="content">
         <p>{{ name }}</p>
         <button @click="deleteCategory" class="delete-button">Deletar</button>
+        
+        <RouterLink
+          :to="{
+            name: 'EditCategory',
+            params: {
+              id: id,
+              name: name,
+              description: description,
+              status: status,
+              userId: userId,
+              
+            },
+          }"
+        >
+          <button class="edit-button">Editar</button>
+        </RouterLink>
       </div>
     </RouterLink>
-
   </div>
 </template>
 
@@ -92,14 +104,28 @@ export default defineComponent({
   box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
   padding: 4px;
   border-radius: 10px;
-  justify-content: center;
-  background-color: #f2f2f2;
+  background-color: transparent;
 }
 
 #figura {
   position: relative;
-  top: -15px;
-  left: 5px;
+  display: flex;
+  width: 100%;
+  background-color: transparent;
+  justify-content: center;
+  align-items: center;
+}
+
+img {
+  height: 40px;
+  width: 40px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px 0px;
 }
 
 p {
@@ -131,7 +157,24 @@ p {
   align-self: center;
 }
 
+.edit-button {
+  position: relative;
+  top: 15px;
+  padding: 10px 10px;
+  width: 100%;
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  align-self: center;
+}
+
 .delete-button:hover {
-  background-color: #ff1a1a;
+  background-color: red;
+}
+
+.edit-button:hover {
+  background-color: gray;
 }
 </style>
