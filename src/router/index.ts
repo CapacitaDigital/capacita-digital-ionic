@@ -7,6 +7,7 @@ import Login from '../domains/auth/views/Login.vue';
 import Person from '@/domains/auth/views/Person.vue';
 import UsersAll from '@/domains/auth/views/UsersAll.vue';
 import ManagerUsers from '@/domains/teacher/views/ManagerUsers.vue';
+import Portugues from '@/domains/teacher/views/Portugues.vue';
 
 // Routes of domains
 
@@ -41,6 +42,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/manager/users",
     name: 'Manager Users',
     component: ManagerUsers
+  },
+  {
+    path: "/manager/portugues",
+    name: 'Português',
+    component: Portugues
   },
 
   // Routes of domains

@@ -3,57 +3,44 @@ import { IonContent, IonPage, IonGrid, IonRow, IonCol, IonInput, IonButton } fro
 import { ref } from 'vue';
 import { routeLocationKey, useRouter } from 'vue-router';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
-import CardIonic from '@/domains/teacher/components/CardIonic.vue';
-import CardAluno from '@/domains/teacher/components/CardAluno.vue';
-
-
+import CardModulos from '../components/CardModulos.vue';
+import CardAluno from '@/domains/teacher/components/CardAluno.vue';  
+import CardNovoModulo from '../components/CardNovoModulo.vue';
 </script>
 
 <template>
     <ion-page class="page">
-            <ion-content>
-                <div class="background-green">
-                    <img src="img/fundo.png" alt="Capacita Digital">
-                </div>
-                <div class="vetor">
-                    <img src="img/fundo.png" alt="Capacita Digital">
-                </div>
-                <div class="livro">
-                    <img src="img/study.png" alt="Capacita Digital">
-                </div>
-                <div class="content">
-                    <div class="areas">
-
-                        <div class="title">
-                            <h1>Dashboard</h1>
-                            <h2>Mais recentes</h2>
-                        </div>
-                        <div class="cards">
-                            <CardIonic title="Português" image="img/raiz.png" bg-color="#8F98FF" shape-color="#182A88"
-                                link="/manager/portugues" />
-                            <CardIonic title="Matemática" image="img/raiz.png" bg-color="#FF7648" shape-color="#FFC278"
-                                link="/manager/users" />
-                        </div>
-
-                    </div>
-
-                    <div class="alunos">
-
-                        <div class="title">
-                            <h1>Alunos</h1>
-                            <h2>Por desempenho</h2>
-                        </div>
-                        <div class="cards-alunos">
-                            <CardAluno title="James" image="img/capas/iconperson.png" bg-color="#4dc591"
-                                shape-color="#00664f" link="" />
-                        </div>
-                    </div>
-
-                </div>
-            </ion-content>
-            <div id="navButton">
-                <NavBotton />
+        <ion-content>
+            <div class="background-green">
+                <img src="img/fundo.png" alt="Capacita Digital">
             </div>
+            <div class="vetor">
+                <img src="img/fundo.png" alt="Capacita Digital">
+            </div>
+            <div class="livro">
+                <img src="img/study.png" alt="Capacita Digital">
+            </div>
+            <div class="content">
+                <div class="areas">
+
+                    <div class="title">
+                        <h1>Português</h1>
+                        <h2>Por prioridade</h2>
+                    </div>
+                    <div class="cards">
+                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/module/edit/" />
+                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/module/edit/" />
+                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/module/edit/" />
+                        <CardNovoModulo link="/manager/portugues/module/new"></CardNovoModulo>
+                    </div>
+
+                </div>
+
+            </div>
+        </ion-content>
+        <div id="navButton">
+            <NavBotton />
+        </div>
     </ion-page>
 </template>
 
@@ -142,7 +129,9 @@ import CardAluno from '@/domains/teacher/components/CardAluno.vue';
 .cards {
     margin-top: 1rem;
     display: flex;
+    flex-wrap: wrap;
     gap: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 
