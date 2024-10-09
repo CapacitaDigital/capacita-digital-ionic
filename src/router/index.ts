@@ -8,6 +8,8 @@ import Person from '@/domains/auth/views/Person.vue';
 import UsersAll from '@/domains/auth/views/UsersAll.vue';
 import ManagerUsers from '@/domains/teacher/views/ManagerUsers.vue';
 import Portugues from '@/domains/teacher/views/Portugues.vue';
+import NewModule from '@/domains/teacher/views/modulos/NewModule.vue';
+import EditModule from '@/domains/teacher/views/modulos/EditModule.vue';
 
 // Routes of domains
 
@@ -44,9 +46,19 @@ const routes: Array<RouteRecordRaw> = [
     component: ManagerUsers
   },
   {
-    path: "/manager/portugues",
+    path: "/manager/portugues/",
     name: 'Português',
     component: Portugues
+  },
+  {
+    path: "/manager/portugues/module/new",
+    name: 'New Module',
+    component: NewModule
+  },
+  {
+    path: "/module/edit",
+    name: 'Edit Module',
+    component: EditModule
   },
 
   // Routes of domains
