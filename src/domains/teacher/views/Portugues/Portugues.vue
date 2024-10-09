@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
-
+import CardModulos from '../../components/CardModulos.vue';
+import CardNovoModulo from '../../components/CardNovoModulo.vue';
 </script>
 
 <template>
@@ -17,25 +18,21 @@ import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
                 <img src="img/study.png" alt="Capacita Digital">
             </div>
             <div class="content">
-                <h1>Editar módulo</h1>
-                <form>
-                    <div class="inputs">
-                        <label for="titulo">Título do módulo: </label>
-                        <input type="text" name="titulo" title="Titulo do Modulo" placeholder="Titulo atual vem aqui"/>
+                <div class="areas">
+
+                    <div class="title">
+                        <h1>Português</h1>
+                        <h2>Por prioridade</h2>
                     </div>
-                    <div class="inputs">
-                        <label for="nivel">Nível do módulo: </label>
-                        <select name="nivel" id="nivel">
-                            <option value="Fácil">Fácil</option>
-                            <option value="Médio">Médio</option>
-                            <option value="Difícil">Difícil</option>
-                        </select>
+                    <div class="cards">
+                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/manager/portuguese/module/edit/" />
+                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/manager/portuguese/module/edit/" />
+                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/manager/portuguese/module/edit/" />
+                        <CardNovoModulo link="/manager/portugues/module/new"></CardNovoModulo>
                     </div>
-                    <div class="buttons">
-                        <button id="atualizar">Atualizar</button>
-                        <button id="deletar">Excluir Módulo</button>
-                    </div>
-                </form>
+
+                </div>
+
             </div>
         </ion-content>
         <div id="navButton">
@@ -49,6 +46,8 @@ import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
+    /* Removed the  
+ global background setting */
     font-family: "Poppins", sans-serif;
 }
 
@@ -97,53 +96,52 @@ import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
     background: #FFF;
     border-radius: 40px 0 0 0;
     padding-left: 1rem;
-    padding-top: 2rem;
 }
 
-h1 {
+.navButton {
+    position: absolute;
+    bottom: 0;
+}
+
+.title {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.title h1 {
+    font-weight: bold;
     font-size: 20px;
-    font-weight: 600;
+    color: #212523;
+    margin: 0;
 }
 
-form {
+.title h2 {
+    margin: 0;
+    font-size: 14px;
+    color: #BCC1CD;
+}
+
+.cards {
+    margin-top: 1rem;
     display: flex;
-    flex-direction: column;
-    align-items: start;
+    flex-wrap: wrap;
     gap: 0.8rem;
-    max-width: 90%;
+    margin-bottom: 1rem;
 }
 
-input, select {
-    background-color: #fff;
-    border: 2px solid #ccc;
-    padding: 0.6rem 1rem;
-    border-radius: 20px;
+
+.cards a {
+    padding: 0;
+
 }
 
-.buttons {
-    display: flex;
-    gap: 0.6rem;
-    align-items: center;
-}
-
-button {
-    padding: 0.8rem 1rem;
-    border: 1px solid #f0f0f0;
-    border-radius: 20px;
-    color: #fff;
-}
-
-#atualizar {
-    background-color: #00664F;
-}
-
-#deletar {
-    background-color: #d30000
-}
-
-.inputs {
+.cards-alunos {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.2rem;
 }
 </style>

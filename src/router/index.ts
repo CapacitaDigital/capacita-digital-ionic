@@ -7,10 +7,9 @@ import Login from '../domains/auth/views/Login.vue';
 import Person from '@/domains/auth/views/Person.vue';
 import UsersAll from '@/domains/auth/views/UsersAll.vue';
 import ManagerUsers from '@/domains/teacher/views/ManagerUsers.vue';
-import Portugues from '@/domains/teacher/views/Portugues.vue';
-import NewModule from '@/domains/teacher/views/modulos/NewModule.vue';
-import EditModule from '@/domains/teacher/views/modulos/EditModule.vue';
-
+import Portugues from '@/domains/teacher/views/Portugues/Portugues.vue';
+import NewModulePortuguese from '@/domains/teacher/views/Portugues/modulos/NewModulePortuguese.vue';
+import EditModulePortuguese from '@/domains/teacher/views/Portugues/modulos/EditModulePortuguese.vue';
 // Routes of domains
 
 import authRoutes from '@/domains/auth/router/auth';
@@ -52,13 +51,13 @@ const routes: Array<RouteRecordRaw> = [
   },
   {
     path: "/manager/portugues/module/new",
-    name: 'New Module',
-    component: NewModule
+    name: 'New Portuguese Module',
+    component: NewModulePortuguese
   },
   {
-    path: "/module/edit",
-    name: 'Edit Module',
-    component: EditModule
+    path: "/manager/portuguese/module/edit",
+    name: 'Edit Portuguese Module',
+    component: EditModulePortuguese
   },
 
   // Routes of domains

@@ -1,7 +1,47 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
+import { ref } from 'vue';
+import router from '@/router';
 
+const titulo = ref('');
+const nivel = ref('');
+
+const createModule = async () => {
+    const module = {
+        Titulo: titulo.value,
+        Nivel: nivel.value,
+    };
+
+    await sendModuleToApi(module);
+};
+const sendModuleToApi = async (module: {
+    Titulo: string,
+    Nivel: string
+}) => {
+    try {
+        const response = await fetch('http://localhost:5158/api/modules/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(module),
+        });
+
+
+        // Verifique se a resposta está vazia
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorMessage}`);
+        }
+
+        const data = await response.json();
+        router.push({ name: 'Portugues' });
+    } catch (error) {
+        console.error('Erro ao enviar usuário para a API:', error);
+    }
+};
 </script>
 
 <template>
@@ -21,17 +61,17 @@ import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
                 <form>
                     <div class="inputs">
                         <label for="titulo">Título do módulo: </label>
-                        <input type="text" name="titulo" title="Titulo do Modulo" placeholder="Titulo do Modulo"/>
+                        <input v-model="titulo" type="text" name="titulo" title="Titulo do Modulo" placeholder="Titulo do Modulo"/>
                     </div>
                     <div class="inputs">
                         <label for="nivel">Nível do módulo: </label>
-                        <select name="nivel" id="nivel">
+                        <select v-model="nivel" name="nivel" id="nivel">
                             <option value="Fácil">Fácil</option>
                             <option value="Médio">Médio</option>
                             <option value="Difícil">Difícil</option>
                         </select>
                     </div>
-                    <button>Enviar</button>
+                    <button @click="createModule">Enviar</button>
                 </form>
             </div>
         </ion-content>
