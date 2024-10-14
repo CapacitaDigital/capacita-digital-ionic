@@ -1,34 +1,44 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { IonContent, IonPage } from '@ionic/vue';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
 import CardModulos from '../../components/CardModulos.vue';
-import CardNovoModulo from '../../components/CardNovoModulo.vue';
+import { ref } from 'vue';
+import { onMounted } from 'vue';
+
+const modules = ref([]);
+
+onMounted(async () => {
+    try {
+        const response = await fetch('http://localhost:5158/api/modules', {
+            method: 'GET',
+            headers: {
+                'accept': 'application/json',
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Erro ao buscar modulos');
+        }
+        const data = await response.json();
+        modules.value = data;
+    } catch (error) {
+        console.error(error);
+    }
+});
+
 </script>
 
 <template>
     <ion-page class="page">
         <ion-content>
-            <div class="background-green">
-                <img src="img/fundo.png" alt="Capacita Digital">
-            </div>
-            <div class="vetor">
-                <img src="img/fundo.png" alt="Capacita Digital">
-            </div>
-            <div class="livro">
-                <img src="img/study.png" alt="Capacita Digital">
-            </div>
             <div class="content">
                 <div class="areas">
 
                     <div class="title">
                         <h1>Português</h1>
-                        <h2>Por prioridade</h2>
+                        <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/manager/portuguese/module/edit/" />
-                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/manager/portuguese/module/edit/" />
-                        <CardModulos title="Conhecendo as letras" link="/manager/portugues" edit-link="/manager/portuguese/module/edit/" />
-                        <CardNovoModulo link="/manager/portugues/module/new"></CardNovoModulo>
+                        <CardModulos v-for="module in modules" :key="module.id" :title="module.title" :status="module.status" :nivel="module.nivel" />
                     </div>
 
                 </div>
@@ -51,34 +61,6 @@ import CardNovoModulo from '../../components/CardNovoModulo.vue';
     font-family: "Poppins", sans-serif;
 }
 
-.background-green {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #00664F;
-    z-index: -1;
-}
-
-.vetor {
-    position: relative;
-    top: 2.1rem;
-    right: -7.5rem;
-    width: 70%;
-    height: 30%;
-    z-index: -1;
-}
-
-.livro {
-    position: relative;
-    top: -6.5rem;
-    right: -10.8rem;
-    width: 55%;
-    height: 30%;
-    z-index: 1;
-}
-
 .img {
     position: absolute;
     top: 0;
@@ -89,10 +71,9 @@ import CardNovoModulo from '../../components/CardNovoModulo.vue';
 }
 
 .content {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 55%;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
     background: #FFF;
     border-radius: 40px 0 0 0;
     padding-left: 1rem;

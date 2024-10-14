@@ -7,6 +7,7 @@ import router from '@/router';
 const titulo = ref('');
 const nivel = ref('');
 
+
 const createModule = async () => {
     const module = {
         Titulo: titulo.value,

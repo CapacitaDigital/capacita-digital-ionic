@@ -1,6 +1,5 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { RouterLink } from 'vue-router';
 
 export default defineComponent({
     props: {
@@ -8,34 +7,42 @@ export default defineComponent({
             type: String,
             required: true
         },
-        link: {
+        status: {
             type: String,
             required: true
         },
-        editLink: {
+        nivel: {
             type: String,
             required: true
+        },
+        link: {
+            type: String,
+            required: false
+        },
+        editLink: {
+            type: String,
+            required: false
         }
     }
 });
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" v-if="status=='Active'">
         <div class="content">
             <div class="shape"></div>
             <div class="head">
                 <p>{{ title }}</p>
                 <RouterLink :to="editLink"><img src="/img/group.png" alt=""></RouterLink>
             </div>
-            <RouterLink :to="link" class="actions">
+            <RouterLink to="/portugues/contents" class="actions">
                 <div class="action">
                     <img src="/img/livro.png" alt="actionImage">
-                    <span>Atividades: <strong>3</strong></span>
+                    <span>Atividades: <strong>x</strong></span>
                 </div>
                 <div class="action">
                     <img src="/img/nivel.png" alt="actionImage">
-                    <span>Nivel: <strong>Fácil</strong></span>
+                    <span>Nivel: <strong>{{ nivel }}</strong></span>
                 </div>
             </RouterLink>
         </div>
@@ -45,27 +52,28 @@ export default defineComponent({
 <style scoped>
 
 .card {
-    text-decoration: none;
-    color: aliceblue;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .content {
+    position: relative;
     background-color: #8F98FF;
     display: flex;
     flex-direction: column;
-    position: relative;  
-    width: 10rem;
+    width: 50%;
     height: 6.5rem;
     align-items: flex-start;
     justify-content: flex-start;
     border-radius: 12px;
-    padding: 0.2rem 0.4rem 0.2rem 0.4rem;
+    padding: 5px;
     gap: 0.4rem;
-    overflow: hidden;
 }
 
 .shape {
-    background-color: #182A88;
+    background-color: #636363;
     color: #fff;
     position: absolute;
     top: 0;
@@ -89,7 +97,7 @@ export default defineComponent({
 }
 
 .action span {
-    color: #4D4D4D;
+    color: #202020;
     font-weight: 600;
 }
 
@@ -114,12 +122,14 @@ export default defineComponent({
 .head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
+    padding: 0px 0px 0px 4px;
 }
 
 p {
     font-weight: 600;
     font-size: 12px;
+    color: white;
     max-width: 80%
 }
 </style>

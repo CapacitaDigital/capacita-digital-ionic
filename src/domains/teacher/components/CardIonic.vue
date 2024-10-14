@@ -1,10 +1,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { RouterLink } from 'vue-router';
 
 export default defineComponent({
     props: {
         title: {
+            type: String,
+            required: true
+        },
+        status: {
             type: String,
             required: true
         },
@@ -29,14 +32,14 @@ export default defineComponent({
 </script>
 
 <template>
-    <RouterLink class="card" :to="link">
-        <div class="content" :style="{ background: bgColor }">
-            <div class="shape" :style="{ background: shapeColor }"></div>
+    <RouterLink class="card" to="/manager/portugues/">
+        <div v-if="status=='Active' " class="content" :style="{ background: bgColor }">
             <div class="img">
-                <img :src="image" />
-                <a href="#"><img id="info"src="../../../../public/img/info.png"></a>
+                <img src="/src/domains/teacher/components/globo.svg" alt="globo">
+                <img src="/src/domains/teacher/components/fundo.svg" alt="fundo">
             </div>
             <p>{{ title }}</p>
+
         </div>
     </RouterLink>
 </template>
@@ -57,9 +60,9 @@ export default defineComponent({
     align-items: flex-start;
     justify-content: space-around;
     border-radius: 12px;
-    padding-left: 1rem;
-    padding-right: 0.4rem;
+    padding: 0px 10px;
     overflow: hidden;
+    background-color: #8F98FF;
 }
 
 .shape {
@@ -74,8 +77,12 @@ export default defineComponent({
 
 .img {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    padding: 0px;
+    margin: 0px;
     width: 100%;
+  
 }
 
 .content img {
@@ -100,5 +107,6 @@ export default defineComponent({
 p {
     font-weight: 600;
     font-size: 16px;
+    color: white;
 }
 </style>

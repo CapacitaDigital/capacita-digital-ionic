@@ -1,29 +1,28 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
+import CardContent from '../components/CardContent.vue';
 import { ref } from 'vue';
-import CardIonic from '@/domains/teacher/components/CardIonic.vue';
 import { onMounted } from 'vue';
 
-const categorias = ref([]);
+const contents = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:5158/api/categories', {
+        const response = await fetch('http://localhost:5158/api/contents', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
             },
         });
         if (!response.ok) {
-            throw new Error('Erro ao buscar categorias');
+            throw new Error('Erro ao buscar atividades');
         }
         const data = await response.json();
-        categorias.value = data;
+        contents.value = data;
     } catch (error) {
         console.error(error);
     }
 });
-
 
 </script>
 
@@ -34,20 +33,18 @@ onMounted(async () => {
                 <div class="areas">
 
                     <div class="title">
-                        <h1>Catgorias</h1>
-                        <h2>Mais recentes</h2>
+                        <h1>atividades</h1>
+                        <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardIonic v-for="categoria in categorias" :key="categoria.id" :title="categoria.name"
-                            :status="categoria.status" />
+                        <CardContent v-for="content in contents" :key="content.id" :title="content.title" :data="content.activityData"/>
                     </div>
 
                 </div>
 
-               
-
             </div>
         </ion-content>
+
     </ion-page>
 </template>
 
@@ -60,29 +57,17 @@ onMounted(async () => {
  global background setting */
     font-family: "Poppins", sans-serif;
 }
-.areas {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+
+.content {
+    position: relative;
     width: 100vw;
     height: 100vh;
-    background: #FFF;
+    background-color: #FFF;
     border-radius: 40px 0 0 0;
     padding-left: 1rem;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    gap: 1rem;
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    background: #FFF;
-    border-radius: 40px 0 0 0;
-    padding-left: 1rem;
-}
+
 
 .title {
     margin-top: 2rem;
@@ -107,7 +92,9 @@ onMounted(async () => {
 .cards {
     margin-top: 1rem;
     display: flex;
+    flex-wrap: wrap;
     gap: 0.8rem;
+    margin-bottom: 1rem;
 }
 
 

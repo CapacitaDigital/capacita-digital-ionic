@@ -10,6 +10,8 @@ import ManagerUsers from '@/domains/teacher/views/ManagerUsers.vue';
 import Portugues from '@/domains/teacher/views/Portugues/Portugues.vue';
 import NewModulePortuguese from '@/domains/teacher/views/Portugues/modulos/NewModulePortuguese.vue';
 import EditModulePortuguese from '@/domains/teacher/views/Portugues/modulos/EditModulePortuguese.vue';
+import Contents from '@/domains/teacher/views/Portugues/contents/Contents.vue';
+
 // Routes of domains
 
 import authRoutes from '@/domains/auth/router/auth';
