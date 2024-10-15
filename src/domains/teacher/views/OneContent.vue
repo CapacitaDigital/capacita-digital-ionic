@@ -33,6 +33,6 @@ export default defineComponent({
 <template>
   <div>
     <h1>Conteúdo</h1>
-    <p>Data: {{ deserializedData }}</p>
+    <p>Data : {{ deserializedData }}</p>
   </div>
 </template>
