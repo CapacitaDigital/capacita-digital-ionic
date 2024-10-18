@@ -20,6 +20,7 @@ onMounted(async () => {
         }
         const data = await response.json();
         modules.value = data;
+        console.log(data);
     } catch (error) {
         console.error(error);
     }
@@ -38,7 +39,7 @@ onMounted(async () => {
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModulos v-for="module in modules" :key="module.id" :title="module.title" :status="module.status" :nivel="module.nivel" />
+                        <CardModulos v-for="module in modules" :key="module.id" :data="module.value"/>
                     </div>
 
                 </div>

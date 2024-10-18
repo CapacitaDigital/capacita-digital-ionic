@@ -1,30 +1,14 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineProps } from 'vue';
+import { RouterLink } from 'vue-router';
 
-export default defineComponent({
-    props: {
-        title: {
-            type: String,
-            required: true
-        },
-        status: {
-            type: String,
-            required: true
-        },
-        nivel: {
-            type: String,
-            required: true
-        },
-        link: {
-            type: String,
-            required: false
-        },
-        editLink: {
-            type: String,
-            required: false
-        }
-    }
+const props = defineProps({
+    data: {
+        type: Object,
+        required: true, 
+    },
 });
+
 </script>
 
 <template>
@@ -32,8 +16,13 @@ export default defineComponent({
         <div class="content">
             <div class="shape"></div>
             <div class="head">
-                <p>{{ title }}</p>
-                <RouterLink :to="editLink"><img src="/img/group.png" alt=""></RouterLink>
+                <p>{{ props.title }}</p>
+                <RouterLink :to="{ 
+                    path: `/portugues/edit/contents/${data.id}`,
+                    query: { Data: data.value } 
+                }">
+                    <img src="/img/group.png" alt="">
+                </RouterLink>
             </div>
             <RouterLink to="/portugues/contents" class="actions">
                 <div class="action">
@@ -42,7 +31,7 @@ export default defineComponent({
                 </div>
                 <div class="action">
                     <img src="/img/nivel.png" alt="actionImage">
-                    <span>Nivel: <strong>{{ nivel }}</strong></span>
+                    <span>Nivel: <strong>{{ props.nivel }}</strong></span>
                 </div>
             </RouterLink>
         </div>
@@ -129,7 +118,7 @@ export default defineComponent({
 p {
     font-weight: 600;
     font-size: 12px;
-    color: white;
+    /*color: white;*/
     max-width: 80%
 }
 </style>
