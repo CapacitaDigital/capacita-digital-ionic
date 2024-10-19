@@ -27,7 +27,7 @@ const userRoutes: Array<RouteRecordRaw> = [
     component: ShowContents,
   },
   {
-    path: "/manager/content/:id", 
+    path: "/manager/contents/:id", 
     name: "exibir um conteudo apenas para editar",
     component: ShowOneContent,
   }

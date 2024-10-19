@@ -15,9 +15,7 @@ export default defineComponent({
     },
     methods: {
         NextPage() {
-            this.$router.push({
-                path: `/manager/content/${this.id}`,
-            });
+            window.location.href = `manager/contents/${this.id}`;
 
         }
     }
