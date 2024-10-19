@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
-import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
 import { ref } from 'vue';
 import router from '@/router';
 
@@ -76,9 +75,6 @@ const sendModuleToApi = async (module: {
                 </form>
             </div>
         </ion-content>
-        <div id="navButton">
-            <NavBotton />
-        </div>
     </ion-page>
 </template>
 

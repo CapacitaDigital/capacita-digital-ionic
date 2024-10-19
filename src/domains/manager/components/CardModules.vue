@@ -1,30 +1,35 @@
 <script lang="ts">
-import { defineProps, onMounted } from 'vue';
-import { RouterLink } from 'vue-router';
+import { defineComponent } from 'vue';
 
-const props = defineProps({
-    title: {
-        type: String,
-        required: true, 
+export default defineComponent({
+    props: {
+        title: {
+            type: String,
+            required: true
+        },
+        status: {
+            type: String,
+            required: true
+        }
     },
-    status:{
-        type: String,
-        required: true,
+    methods: {
+        nextPage() {
+            this.$router.push({
+                path: '/manager/contents',
+            });
+        }
     }
 });
- console.log(props.title);
-    console.log(props.status);
 </script>
 
 <template>
-    <div class="card">
-        ola
-        {{ title }}
+    <div class="card" @click="nextPage">
+        <p>{{ title }}</p>
+        <p>{{ status }}</p>
     </div>
 </template>
 
 <style scoped>
-
 .card {
     position: relative;
     display: flex;
@@ -129,6 +134,6 @@ p {
         <div class="action">
             <img src="/img/nivel.png" alt="actionImage">
              <span>Nivel: <strong>{{ props.data.nivel }}</strong></span> -->
-        <!-- </div>
+<!-- </div>
     </RouterLink>
 </div> -->

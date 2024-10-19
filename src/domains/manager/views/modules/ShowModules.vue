@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
-import CardContent from '../components/CardContent.vue';
+import CardModules from '../../components/CardModules.vue';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
-const contents = ref([]);
+const modules = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:8080/api/contents', {
+        const response = await fetch('http://localhost:8080/api/modules', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
             },
         });
         if (!response.ok) {
-            throw new Error('Erro ao buscar atividades');
+            throw new Error('Erro ao buscar modulos');
         }
         const data = await response.json();
-        contents.value = data;
+        modules.value = data;
     } catch (error) {
         console.error(error);
     }
@@ -31,20 +31,19 @@ onMounted(async () => {
         <ion-content>
             <div class="content">
                 <div class="areas">
-
                     <div class="title">
-                        <h1>atividades</h1>
+                        <h1>Português</h1>
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardContent v-for="content in contents" :key="content.id" :title="content.title" :data="content.activityData"/>
+                        <CardModules v-for="module in modules" :key="module.id" :title="module.title"
+                            :status="module.status" />
                     </div>
 
                 </div>
 
             </div>
         </ion-content>
-
     </ion-page>
 </template>
 
@@ -58,16 +57,28 @@ onMounted(async () => {
     font-family: "Poppins", sans-serif;
 }
 
+.img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
 .content {
     position: relative;
     width: 100vw;
     height: 100vh;
-    background-color: #FFF;
+    background: #FFF;
     border-radius: 40px 0 0 0;
     padding-left: 1rem;
 }
 
-
+.navButton {
+    position: absolute;
+    bottom: 0;
+}
 
 .title {
     margin-top: 2rem;

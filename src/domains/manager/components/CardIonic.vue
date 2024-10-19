@@ -32,11 +32,11 @@ export default defineComponent({
 </script>
 
 <template>
-    <RouterLink class="card" to="/manager/portugues/">
+    <RouterLink class="card" to="/manager/modules">
         <div v-if="status=='Active' " class="content" :style="{ background: bgColor }">
             <div class="img">
-                <img src="/src/domains/teacher/components/globo.svg" alt="globo">
-                <img src="/src/domains/teacher/components/fundo.svg" alt="fundo">
+                <img src="/src/domains/manager/components/globo.svg" alt="globo">
+                <img src="/src/domains/manager/components/fundo.svg" alt="fundo">
             </div>
             <p>{{ title }}</p>
 

@@ -1,40 +1,36 @@
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-export default defineComponent({
-  props: {
-    data: {
-      type: String,
-      required: true
-    }
-  },
-  setup(props) {
-    const ddata = ref({});
+export default {
+  setup() {
+    const data = ref({});
+    const route = useRoute();
 
-    const deserializeData = (dataString: string) => {
+    onMounted(async () => {
+      const id = route.params.id;
       try {
-        return JSON.parse(dataString);
-      } catch (error) {
-        console.error("Failed to deserialize data:", error);
-        return {};
-      }
-    };
+        const response = await fetch(`http://localhost:8080/api/content/${id}`, {
+          method: 'GET',
+          headers: {
+            'accept': 'application/json',
+          },
+        });
 
-    onMounted(() => {
-      const params = new URLSearchParams(window.location.search);
-      const date = {
-        title: params.get('title'),
-        letra : params.get('letra'),
-        letrac: params.get('letrac')
+        if (!response.ok) {
+          throw new Error('Erro ao buscar atividades');
+        }
+
+        data.value = await response.json();
+        console.log("Data:", data.value);
+      } catch (error) {
+        console.error(error);
       }
-      ddata.value = deserializeData(props.data);
-      console.log("Deserialized data:", ddata.value);
-      console.log("DATE:", letras);
     });
 
-    return { ddata };
+    return { data };
   }
-});
+};
 </script>
 
 <template>
@@ -53,20 +49,22 @@ export default defineComponent({
 </template>
 
 <style scoped>
-
-.container{
+.container {
   display: flex;
   flex-direction: column;
 }
-form{
+
+form {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
-input{
+
+input {
   border: 1px solid gray;
 }
-.letras{
+
+.letras {
   text-align: center;
   background-color: transparent;
   height: 50px;
@@ -74,7 +72,8 @@ input{
   border: 1px solid gray;
   border-radius: 50%;
 }
-button{
+
+button {
   margin: 0 auto;
   height: 30px;
   width: 100px;

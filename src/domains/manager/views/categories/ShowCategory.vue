@@ -1,29 +1,29 @@
-<script setup lang="js">
+<script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
-import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
-import CardModulos from '../../components/CardModulos.vue';
 import { ref } from 'vue';
+import CardIonic from '@/domains/manager/components/CardIonic.vue';
 import { onMounted } from 'vue';
 
-const modules = ref([]);
+const categorias = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:8080/api/modules', {
+        const response = await fetch('http://localhost:8080/api/categories', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
             },
         });
         if (!response.ok) {
-            throw new Error('Erro ao buscar modulos');
+            throw new Error('Erro ao buscar categorias');
         }
         const data = await response.json();
-        modules.value = data;
+        categorias.value = data;
     } catch (error) {
         console.error(error);
     }
 });
+
 
 </script>
 
@@ -34,20 +34,20 @@ onMounted(async () => {
                 <div class="areas">
 
                     <div class="title">
-                        <h1>Português</h1>
-                        <h2>mais recentes</h2>
+                        <h1>Catgorias</h1>
+                        <h2>Mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModulos v-for="module in modules" :key="module.id" title="titulo passado" :status="module.status" />
+                        <CardIonic v-for="categoria in categorias" :key="categoria.id" :title="categoria.name"
+                            :status="categoria.status" />
                     </div>
 
                 </div>
 
+
+
             </div>
         </ion-content>
-        <div id="navButton">
-            <NavBotton />
-        </div>
     </ion-page>
 </template>
 
@@ -61,17 +61,10 @@ onMounted(async () => {
     font-family: "Poppins", sans-serif;
 }
 
-.img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.content {
-    position: relative;
+.areas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     width: 100vw;
     height: 100vh;
     background: #FFF;
@@ -79,9 +72,17 @@ onMounted(async () => {
     padding-left: 1rem;
 }
 
-.navButton {
-    position: absolute;
-    bottom: 0;
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #FFF;
+    border-radius: 40px 0 0 0;
+    padding-left: 1rem;
 }
 
 .title {
@@ -107,9 +108,7 @@ onMounted(async () => {
 .cards {
     margin-top: 1rem;
     display: flex;
-    flex-wrap: wrap;
     gap: 0.8rem;
-    margin-bottom: 1rem;
 }
 
 
