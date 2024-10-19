@@ -9,7 +9,7 @@ const modules = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:5158/api/modules', {
+        const response = await fetch('http://localhost:8080/api/modules', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
@@ -20,7 +20,6 @@ onMounted(async () => {
         }
         const data = await response.json();
         modules.value = data;
-        console.log(data);
     } catch (error) {
         console.error(error);
     }
@@ -39,7 +38,7 @@ onMounted(async () => {
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModulos v-for="module in modules" :key="module.id" :data="module.value"/>
+                        <CardModulos v-for="module in modules" :key="module.id" title="titulo passado" :status="module.status" />
                     </div>
 
                 </div>

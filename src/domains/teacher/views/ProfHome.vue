@@ -8,7 +8,7 @@ const categorias = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:5158/api/categories', {
+        const response = await fetch('http://localhost:8080/api/categories', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',

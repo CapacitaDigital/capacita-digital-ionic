@@ -8,7 +8,7 @@ const contents = ref([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:5158/api/contents', {
+        const response = await fetch('http://localhost:8080/api/contents', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',

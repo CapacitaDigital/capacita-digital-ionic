@@ -1,40 +1,25 @@
 <script lang="ts">
-import { defineProps } from 'vue';
+import { defineProps, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
 
 const props = defineProps({
-    data: {
-        type: Object,
+    title: {
+        type: String,
         required: true, 
     },
+    status:{
+        type: String,
+        required: true,
+    }
 });
-
+ console.log(props.title);
+    console.log(props.status);
 </script>
 
 <template>
-    <div class="card" v-if="status=='Active'">
-        <div class="content">
-            <div class="shape"></div>
-            <div class="head">
-                <p>{{ props.title }}</p>
-                <RouterLink :to="{ 
-                    path: `/portugues/edit/contents/${data.id}`,
-                    query: { Data: data.value } 
-                }">
-                    <img src="/img/group.png" alt="">
-                </RouterLink>
-            </div>
-            <RouterLink to="/portugues/contents" class="actions">
-                <div class="action">
-                    <img src="/img/livro.png" alt="actionImage">
-                    <span>Atividades: <strong>x</strong></span>
-                </div>
-                <div class="action">
-                    <img src="/img/nivel.png" alt="actionImage">
-                    <span>Nivel: <strong>{{ props.nivel }}</strong></span>
-                </div>
-            </RouterLink>
-        </div>
+    <div class="card">
+        ola
+        {{ title }}
     </div>
 </template>
 
@@ -110,6 +95,8 @@ const props = defineProps({
 
 .head {
     display: flex;
+
+    color: black;
     align-items: center;
     justify-content: center;
     padding: 0px 0px 0px 4px;
@@ -122,3 +109,26 @@ p {
     max-width: 80%
 }
 </style>
+<!-- <div class="content">
+    <div class="shape"></div>
+    <div class="head">
+        olaaa
+        <p>{{ props.title }}</p>
+        <RouterLink :to="{ 
+            path: `/portugues/edit/contents/${props.data.id}`,
+            query: { Data: props.data.value } 
+        }">
+            <img src="/img/group.png" alt="">
+        </RouterLink>
+    </div>
+    <RouterLink to="/portugues/contents" class="actions">
+        <div class="action">
+            <img src="/img/livro.png" alt="actionImage">
+            <span>Atividades: <strong>x</strong></span>
+        </div>
+        <div class="action">
+            <img src="/img/nivel.png" alt="actionImage">
+             <span>Nivel: <strong>{{ props.data.nivel }}</strong></span> -->
+        <!-- </div>
+    </RouterLink>
+</div> -->
