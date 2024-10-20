@@ -38,7 +38,13 @@ onMounted(async () => {
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModulos v-for="module in modules" :key="module.id" title="titulo passado" :status="module.status" />
+                        <CardModulos v-for="module in modules" :key="module.id" 
+                            :id="module.id"
+                            :title="module.title"
+                            :description="module.description"
+                            :nivel="module.nivel"
+                            :status="module.status"
+                         />
                     </div>
 
                 </div>
