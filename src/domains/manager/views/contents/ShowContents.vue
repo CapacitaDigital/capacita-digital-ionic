@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
-import CardContent from '../components/CardContent.vue';
+import CardContent from '../../components/CardContent.vue';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
-const contents = ref([]);
+interface Content {
+    id: number;
+    title: string;
+}
+
+const contents = ref<Content[]>([]);
 
 onMounted(async () => {
     try {
@@ -37,7 +42,8 @@ onMounted(async () => {
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardContent v-for="content in contents" :key="content.id" :title="content.title" :data="content.activityData"/>
+                        <CardContent v-for="content in contents" :key="content.id" :id="content.id"
+                            :title="content.title" />
                     </div>
 
                 </div>

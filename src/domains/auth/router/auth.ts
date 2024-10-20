@@ -2,9 +2,6 @@ import { RouteRecordRaw } from 'vue-router';
 import Register from '../views/Register.vue';
 import Login from '../views/Login.vue';
 import UsersAll from '../views/UsersAll.vue';
-
-import User from '@/domains/user/components/User.vue';
-
 const authRoutes: Array<RouteRecordRaw> = [
     {
         path: '/register',

@@ -1,24 +1,22 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+
 export default defineComponent({
     props: {
-        title: {
-            type: String,
+        id: {
+            type: Number,
             required: true
         },
-        data: {
+        title: {
             type: String,
             required: true
         }
     },
     methods: {
-        navigateToContent() {
-            console.log("Navigating with data:", this.data); // Adicionar log para depuração
-            this.$router.push({
-                path: '/content',
-                query: { data: this.data }
-            });
+        NextPage() {
+            window.location.href = `manager/contents/${this.id}`;
+
         }
     }
 });
@@ -26,7 +24,7 @@ export default defineComponent({
 <template>
     <div class="container">
         <div class="foto">
-            <a @click="navigateToContent" class="activity-link">
+            <a @click="NextPage" class="activity-link">
                 <img src="/public/img/abc.png" alt="">
             </a>
         </div>

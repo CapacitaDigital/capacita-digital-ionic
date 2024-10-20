@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { ref } from 'vue';
-import CardIonic from '@/domains/teacher/components/CardIonic.vue';
+import CardIonic from '@/domains/manager/components/CardIonic.vue';
 import { onMounted } from 'vue';
 
 const categorias = ref([]);
@@ -44,7 +44,7 @@ onMounted(async () => {
 
                 </div>
 
-               
+
 
             </div>
         </ion-content>
@@ -60,6 +60,7 @@ onMounted(async () => {
  global background setting */
     font-family: "Poppins", sans-serif;
 }
+
 .areas {
     display: flex;
     flex-direction: column;

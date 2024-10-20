@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/domains/teacher/components/CardModulos.vue
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 
@@ -21,11 +22,34 @@ const props = defineProps({
     status: {
         type: String,
         required: true,
+=======
+<script lang="ts">
+import { defineComponent } from 'vue';
+
+export default defineComponent({
+    props: {
+        title: {
+            type: String,
+            required: true
+        },
+        status: {
+            type: String,
+            required: true
+        }
+    },
+    methods: {
+        nextPage() {
+            this.$router.push({
+                path: '/manager/contents',
+            });
+        }
+>>>>>>> 424b7496f14dd4df6f924802c12d786c980d3ecd:src/domains/manager/components/CardModules.vue
     }
 });
 </script>
 
 <template>
+<<<<<<< HEAD:src/domains/teacher/components/CardModulos.vue
     <div class="card">
         <div class="content">
             <div class="shape"></div>
@@ -49,12 +73,21 @@ const props = defineProps({
                 </div>
             </RouterLink>
         </div>
+=======
+    <div class="card" @click="nextPage">
+        <p>{{ title }}</p>
+        <p>{{ status }}</p>
+>>>>>>> 424b7496f14dd4df6f924802c12d786c980d3ecd:src/domains/manager/components/CardModules.vue
     </div>
 </template>
 
 <style scoped>
+<<<<<<< HEAD:src/domains/teacher/components/CardModulos.vue
 
  .card {
+=======
+.card {
+>>>>>>> 424b7496f14dd4df6f924802c12d786c980d3ecd:src/domains/manager/components/CardModules.vue
     position: relative;
     display: flex;
     flex-direction: column;
@@ -142,3 +175,29 @@ p {
     max-width: 80%
 } 
 </style>
+<<<<<<< HEAD:src/domains/teacher/components/CardModulos.vue
+=======
+<!-- <div class="content">
+    <div class="shape"></div>
+    <div class="head">
+        olaaa
+        <p>{{ props.title }}</p>
+        <RouterLink :to="{ 
+            path: `/portugues/edit/contents/${props.data.id}`,
+            query: { Data: props.data.value } 
+        }">
+            <img src="/img/group.png" alt="">
+        </RouterLink>
+    </div>
+    <RouterLink to="/portugues/contents" class="actions">
+        <div class="action">
+            <img src="/img/livro.png" alt="actionImage">
+            <span>Atividades: <strong>x</strong></span>
+        </div>
+        <div class="action">
+            <img src="/img/nivel.png" alt="actionImage">
+             <span>Nivel: <strong>{{ props.data.nivel }}</strong></span> -->
+<!-- </div>
+    </RouterLink>
+</div> -->
+>>>>>>> 424b7496f14dd4df6f924802c12d786c980d3ecd:src/domains/manager/components/CardModules.vue

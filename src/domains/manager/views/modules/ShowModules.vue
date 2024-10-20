@@ -1,7 +1,6 @@
-<script setup lang="js">
+<script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
-import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
-import CardModulos from '../../components/CardModulos.vue';
+import CardModules from '../../components/CardModules.vue';
 import { ref } from 'vue';
 import { onMounted } from 'vue';
 
@@ -32,12 +31,12 @@ onMounted(async () => {
         <ion-content>
             <div class="content">
                 <div class="areas">
-
                     <div class="title">
                         <h1>Português</h1>
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
+<<<<<<< HEAD:src/domains/teacher/views/Portugues/Portugues.vue
                         <CardModulos v-for="module in modules" :key="module.id" 
                             :id="module.id"
                             :title="module.title"
@@ -45,15 +44,16 @@ onMounted(async () => {
                             :nivel="module.nivel"
                             :status="module.status"
                          />
+=======
+                        <CardModules v-for="module in modules" :key="module.id" :title="module.title"
+                            :status="module.status" />
+>>>>>>> 424b7496f14dd4df6f924802c12d786c980d3ecd:src/domains/manager/views/modules/ShowModules.vue
                     </div>
 
                 </div>
 
             </div>
         </ion-content>
-        <div id="navButton">
-            <NavBotton />
-        </div>
     </ion-page>
 </template>
 
