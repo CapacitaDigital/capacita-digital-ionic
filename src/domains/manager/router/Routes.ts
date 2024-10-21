@@ -5,7 +5,7 @@ import ShowModules from "@/domains/manager/views/modules/ShowModules.vue"
 import EditModule from "@/domains/manager/views/modules/EditModule.vue"
 import ShowContents from "../views/contents/ShowContents.vue";
 import ShowOneContent from "../views/contents/ShowOneContent.vue";
-
+import CreateContent from "@/domains/manager/views/contents/CreateContent.vue";
 
 const userRoutes: Array<RouteRecordRaw> = [
   // CATEGORIES ROUTES
@@ -36,6 +36,11 @@ const userRoutes: Array<RouteRecordRaw> = [
     path: "/manager/contents/:id", 
     name: "exibir um conteudo apenas para editar",
     component: ShowOneContent,
+  },
+  {
+    path: "/manager/contents/new", 
+    name: "Tela de create para atividade",
+    component: CreateContent,
   }
 ];
 

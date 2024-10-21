@@ -5,7 +5,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
 
 <template>
   <ion-app class="container">
-    <ion-router-outlet />
+    <ion-router-outlet /> 
   </ion-app>
 </template>
 
@@ -15,6 +15,7 @@ import { IonApp, IonRouterOutlet } from '@ionic/vue';
   margin: 0px;
   box-sizing: border-box;
   height: 100vh;
+  overflow: scroll;
   width: 100vw;
 }
 </style>
