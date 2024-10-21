@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonContent, IonPage } from '@ionic/vue';
 import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
-import Card from '@/domains/user/components/Card.vue';
 import CardEmpty from '@/domains/user/components/CardEmpty.vue';
 import Header from '@/domains/reasoning/components/Header.vue';
 import { ref, onMounted } from 'vue';
 import Buzina from '@/domains/auth/components/Buzina.vue';
-import { falar } from '@/utils/utils';
+import CardIonic from '@/domains/manager/components/CardIonic.vue';
 
 const frase = ref('SeleçãoTema');
 interface Categoria {
@@ -22,7 +21,7 @@ const categorias = ref<Categoria[]>([]);
 
 const fetchCategorias = async () => {
   try {
-    const response = await fetch('http://localhost:5158/api/categories/', {
+    const response = await fetch('http://localhost:8080/api/categories/', {
       method: 'GET',
       headers: {
         'Accept': 'application/json'
@@ -53,8 +52,9 @@ onMounted(() => {
       </div>
 
       <div id="container">
-        <Card v-for="categoria in categorias" :id="categoria.id.toString()"  :name="categoria.name"
-          :description="categoria.description" :status="categoria.status" :userId="categoria.userId.toString()" :urlImage="categoria.urlImage" />
+        <CardIonic v-for="categoria in categorias" :key="categoria.id" :id="categoria.id.toString()"  :name="categoria.name"
+          :description="categoria.description" :status="categoria.status" :userId="categoria.userId.toString()" :urlImage="categoria.urlImage"
+          :title="categoria.name" :link="'user/modules'" />
           <CardEmpty message="Criar categoria"  />
       </div>
 

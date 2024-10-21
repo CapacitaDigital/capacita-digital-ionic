@@ -2,6 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 
 import ShowCategories from "../views/categories/ShowCategory.vue";
 import ShowModules from "@/domains/manager/views/modules/ShowModules.vue"
+import EditModule from "@/domains/manager/views/modules/EditModule.vue"
 import ShowContents from "../views/contents/ShowContents.vue";
 import ShowOneContent from "../views/contents/ShowOneContent.vue";
 
@@ -16,8 +17,13 @@ const userRoutes: Array<RouteRecordRaw> = [
   // MODULES ROUTES
   {
     path: "/manager/modules",
-    name: "exibir modulos para editar",
+    name: "exibir modulos ",
     component: ShowModules,
+  },
+  {
+    path: "/manager/modules/:id",
+    name: "exibir apenas um modulo para editar",
+    component: EditModule,
   },
 
   // CONTENTS ROUTES

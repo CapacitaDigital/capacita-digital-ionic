@@ -32,13 +32,13 @@ const props = defineProps({
             <div class="head">
                 <p>{{ props.title }}</p>
                 <RouterLink :to="{
-                    path: `/manager/modules/${props.id}`,
+                    path: `/user/modules/${props.id}`,
                     query: { data: JSON.stringify(props) }
                 }">
                     <img src="/img/group.png" alt="">
                 </RouterLink>
             </div>
-            <RouterLink to="/manager/contents" class="actions">
+            <RouterLink to="/user/contents" class="actions">
                 <div class="action">
                     <img src="/img/livro.png" alt="actionImage">
                     <span>Atividades: <strong>x</strong></span>

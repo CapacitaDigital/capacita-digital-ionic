@@ -1,180 +1,112 @@
 <script lang="ts">
-import { defineComponent } from "vue";
-import { RouterLink } from "vue-router";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  props: {
-    id: {
-      type: String,
-      required: true,
-    },
-    name: {
-      type: String,
-      required: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      required: true,
-    },
-    userId: {
-      type: String,
-      required: true,
-    },
-    urlImage: {
-      type: String,
-      required: true,
-    }
-  },
-  setup(props, { emit }) {
-
-    const deleteCategory = async () => {
-      try {
-        const response = await fetch(`http://localhost:5158/api/categories/${props.id}`, {
-          method: 'DELETE',
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    props: {
+        title: {
+            type: String,
+            required: true
+        },
+        status: {
+            type: String,
+            required: true
+        },
+        bgColor: {
+            type: String,
+            required: true
+        },
+        shapeColor: {
+            type: String,
+            required: true
+        },
+        image: {
+            type: String,
+            required: true
+        },
+        link: {
+            type: String,
+            required: true
         }
-
-        console.log('Categoria deletada com sucesso');
-        emit('categoryDeleted', props.id); // Emite o evento com o ID da categoria excluída
-        window.location.reload(); // Recarrega a página
-      } catch (error) {
-        console.error('Erro ao deletar categoria:', error);
-      }
-    };
-
-    return {
-      id: props.id,
-      name: props.name,
-      description: props.description,
-      status: props.status,
-      userId: props.userId,
-      urlImage: props.urlImage,
-      deleteCategory,
-    };
-  },
+    }
 });
 </script>
 
 <template>
-  <div class="container">
-    <RouterLink :to="{ name: 'Home' }" class="button">
-      <div id="figura">
-        <img :src="'http://localhost:5158' + urlImage" alt="">
-      </div>
-      <div class="content">
-        <p>{{ name }}</p>
-        <button @click="deleteCategory" class="delete-button">Deletar</button>
-        
-        <RouterLink
-          :to="{
-            name: 'EditCategory',
-            params: {
-              id: id,
-              name: name,
-              description: description,
-              status: status,
-              userId: userId,
-              
-            },
-          }"
-        >
-          <button class="edit-button">Editar</button>
-        </RouterLink>
-      </div>
+    <RouterLink class="card" to="/manager/modules">
+        <div v-if="status=='Active' " class="content" :style="{ background: bgColor }">
+            <div class="img">
+                <img src="/src/domains/manager/components/globo.svg" alt="globo">
+                <img src="/src/domains/manager/components/fundo.svg" alt="fundo">
+            </div>
+            <p>{{ title }}</p>
+
+        </div>
     </RouterLink>
-  </div>
 </template>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap");
 
-.container {
-  display: flex;
-  flex-direction: column;
-  width: 145px;
-  height: 155px;
-  margin: 15px auto;
-  box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
-  padding: 4px;
-  border-radius: 10px;
-  background-color: transparent;
-}
-
-#figura {
-  position: relative;
-  display: flex;
-  width: 100%;
-  background-color: transparent;
-  justify-content: center;
-  align-items: center;
-}
-
-img {
-  height: 40px;
-  width: 40px;
+.card {
+    text-decoration: none;
+    color: aliceblue;
 }
 
 .content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 10px 0px;
+    display: flex;
+    flex-direction: column;
+    position: relative;  
+    width: 8rem;
+    height: 6rem;
+    align-items: flex-start;
+    justify-content: space-around;
+    border-radius: 12px;
+    padding: 0px 10px;
+    overflow: hidden;
+    background-color: #8F98FF;
+}
+
+.shape {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 30% 70% 0% 100% / 77% 0% 100% 23%;
+    background-clip: content-box;
+}
+
+.img {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+  
+}
+
+.content img {
+    position: relative;
+    width: 1.5rem;
+}
+
+.content #info {
+    max-width: 1.4rem;
+}
+
+
+.title {
+    position: relative;
+    top: 1rem;
+    left: -1rem;
+    font-size: 15px;
+    color: aliceblue;
+    font-weight: bold;
 }
 
 p {
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  top: 0px;
-  color: #4d4d4d;
-  font-family: "DM Sans", sans-serif;
-  font-weight: 600;
-  font-style: medium;
-  font-size: 14px;
-  margin-left: 10px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.delete-button {
-  position: relative;
-  top: 15px;
-  padding: 10px 10px;
-  width: 100%;
-  background-color: #ff4d4d;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  align-self: center;
-}
-
-.edit-button {
-  position: relative;
-  top: 15px;
-  padding: 10px 10px;
-  width: 100%;
-  background-color: gray;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  align-self: center;
-}
-
-.delete-button:hover {
-  background-color: red;
-}
-
-.edit-button:hover {
-  background-color: gray;
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
 }
 </style>

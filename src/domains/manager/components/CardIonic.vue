@@ -13,26 +13,31 @@ export default defineComponent({
         },
         bgColor: {
             type: String,
-            required: true
+            required: false
         },
         shapeColor: {
             type: String,
-            required: true
+            required: false
         },
         image: {
             type: String,
-            required: true
+            required: false
         },
         link: {
             type: String,
             required: true
+        }
+    },
+    methods: {
+        nextPage() {
+            window.location.href=`/${this.link}`;
         }
     }
 });
 </script>
 
 <template>
-    <RouterLink class="card" to="/manager/modules">
+    <div class="card" @click="nextPage">
         <div v-if="status=='Active' " class="content" :style="{ background: bgColor }">
             <div class="img">
                 <img src="/src/domains/manager/components/globo.svg" alt="globo">
@@ -41,7 +46,7 @@ export default defineComponent({
             <p>{{ title }}</p>
 
         </div>
-    </RouterLink>
+    </div>
 </template>
 
 <style scoped>

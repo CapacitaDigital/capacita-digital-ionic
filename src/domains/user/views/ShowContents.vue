@@ -1,32 +1,29 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { ref } from 'vue';
+import CardContent from '@/domains/user/components/CardContent.vue';
 import { onMounted } from 'vue';
-import CardModules from '@/domains/manager/components/CardModules.vue';
 
-interface Module {
+interface Content {
     id: number;
     title: string;
-    description: string;
-    nivel: string;
-    status: string;
 }
 
-const modules = ref<Module[]>([]);
+const contents = ref<Content[]>([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:8080/api/modules', {
+        const response = await fetch('http://localhost:8080/api/contents', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
             },
         });
         if (!response.ok) {
-            throw new Error('Erro ao buscar modulos');
+            throw new Error('Erro ao buscar atividades');
         }
         const data = await response.json();
-        modules.value = data;
+        contents.value = data;
     } catch (error) {
         console.error(error);
     }
@@ -39,24 +36,21 @@ onMounted(async () => {
         <ion-content>
             <div class="content">
                 <div class="areas">
+
                     <div class="title">
-                        <h1>Português</h1>
+                        <h1>atividades</h1>
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModules v-for="module in modules" :key="module.id" 
-                            :id="module.id"
-                            :title="module.title"
-                            :description="module.description"
-                            :nivel="module.nivel"
-                            :status="module.status"
-                         />
+                        <CardContent v-for="content in contents" :key="content.id" :id="content.id"
+                            :title="content.title" />
                     </div>
 
                 </div>
 
             </div>
         </ion-content>
+
     </ion-page>
 </template>
 
@@ -70,28 +64,16 @@ onMounted(async () => {
     font-family: "Poppins", sans-serif;
 }
 
-.img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
 .content {
     position: relative;
     width: 100vw;
     height: 100vh;
-    background: #FFF;
+    background-color: #FFF;
     border-radius: 40px 0 0 0;
     padding-left: 1rem;
 }
 
-.navButton {
-    position: absolute;
-    bottom: 0;
-}
+
 
 .title {
     margin-top: 2rem;

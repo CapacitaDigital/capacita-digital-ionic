@@ -11,6 +11,7 @@ import Person from "@/domains/auth/views/Person.vue";
 import authRoutes from "@/domains/auth/router/auth";
 import managerRoutes from "@/domains/manager/router/Routes";
 import technologyRoutes from "@/domains/technology/router/technologyRoutes";
+import userRoutes from "@/domains/user/router/userRoutes";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,6 +35,7 @@ const routes: Array<RouteRecordRaw> = [
   ...authRoutes, //routes of auth
   ...managerRoutes, //routes of manager
   ...technologyRoutes, //routes of technology
+  ...userRoutes, //routes of user
 ];
 
 const router = createRouter({

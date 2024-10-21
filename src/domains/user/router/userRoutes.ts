@@ -1,26 +1,15 @@
 import { RouteRecordRaw } from 'vue-router';
-import HomePage from '../views/Home.vue';
+import UserHome from '../views/UserHome.vue';
 import PerfilPage from '../views/Perfil.vue';
-import Modulo from '../views/Modulo.vue';
-import RoadMap from '../views/RoadMap.vue';
-import CreateCategory from '../views/CategoriaCreate.vue';
-import EditCategory from '../views/CategoriaEdit.vue';
-
+import RoadMap from '../views/ShowContents.vue';
+import UserModules from '@/domains/user/views/UserModules.vue';
+import ShowContents from '@/domains/user/views/ShowContents.vue';
+import OneContent from '@/domains/user/views/OneContent.vue';
 const userRoutes: Array<RouteRecordRaw> = [
     {
         path: '/home',
         name: 'Home',
-        component: HomePage
-    },
-    {   
-        path: '/categoria/create',
-        name: 'CreateCategory',
-        component: CreateCategory
-    },
-    {   
-        path: '/categoria/edit:id/:name/:description/:status/:userId',
-        name: 'EditCategory',
-        component: EditCategory,
+        component: UserHome
     },
     {
         path: '/perfil',
@@ -28,9 +17,19 @@ const userRoutes: Array<RouteRecordRaw> = [
         component: PerfilPage
     },
     {
-        path: '/att/modulo',
-        name: 'Modulo de atividade',
-        component: Modulo
+        path: '/user/modules',
+        name: 'Modulos de atividade',
+        component: UserModules
+    },
+    {
+        path: '/user/contents',
+        name: 'mostra atividades do modulo',
+        component: ShowContents
+    },
+    {
+        path: '/user/contents/:id',
+        name: 'acessa a atividade especifica do modulo',
+        component: OneContent
     },
     {
       path: '/att/roadmap',
