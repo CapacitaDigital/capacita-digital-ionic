@@ -11,7 +11,10 @@ export default defineComponent({
             urlImage: '',
             urlsDocuments: [] as File[],
             moduleId: 0,
-            activityData: {}
+            activityData: "{ teste: 'teste' teste2: 'teste2' }",
+            urlImagePath: '',
+            urlVideo: '',
+            urlsDocumentsPaths: [] as string[]
         });
 
         const modules = ref<{ id: number; title: string }[]>([]);
@@ -44,6 +47,7 @@ export default defineComponent({
                     data.value.image = file;
                 } else if (type === 'document') {
                     data.value.urlsDocuments.push(file);
+
                 }
             }
         };
@@ -63,7 +67,7 @@ export default defineComponent({
                 }
 
                 const result = await response.json();
-                return result.path;
+                return result.filePath;
             } catch (error) {
                 console.error(error);
                 return null;
@@ -72,11 +76,9 @@ export default defineComponent({
 
         const createContent = async () => {
             try {
-                const urlImagePath = data.value.image ? await uploadFile(data.value.image) : null;
-                const urlsDocumentsPaths = await Promise.all(data.value.urlsDocuments.map(uploadFile));
-
-                console.log(urlImagePath, urlsDocumentsPaths);
-
+                data.value.urlImagePath = data.value.image ? await uploadFile(data.value.image) : null; // Promise que retorna uma string com o path da imagem enviada para o servidor
+                data.value.urlsDocumentsPaths = await Promise.all(data.value.urlsDocuments.map(uploadFile)); // Array de Promises que retorna um array de strings com os paths dos documentos enviados para o servidor 
+                
                 const response = await fetch(`http://localhost:8080/api/contents`, {
                     method: 'POST',
                     headers: {
@@ -84,16 +86,17 @@ export default defineComponent({
                         'accept': 'application/json',
                     },
                     body: JSON.stringify({
-                        title: data.value.title,
-                        description: data.value.description,
-                        type: data.value.type,
-                        activityData: JSON.stringify(data.value.activityData),
-                        urlImage: urlImagePath,
-                        urlsDocuments: urlsDocumentsPaths,
-                        moduleId: data.value.moduleId
+                        Title: data.value.title,
+                        Description: data.value.description,
+                        Type: data.value.type,
+                        UrlImage: data.value.urlImagePath,
+                        UrlsDocuments: data.value.urlsDocumentsPaths,
+                        UrlVideo: data.value.urlVideo, 
+                        ActivityData: data.value.activityData,
+                        ModuleId: data.value.moduleId
                     })
                 });
-
+                console.log(data.value.title);
                 if (!response.ok) {
                     throw new Error('Erro ao criar conteúdo');
                 }
@@ -121,9 +124,8 @@ export default defineComponent({
                 <input v-model="data.description" name="description" type="text" placeholder="Descrição do conteúdo">
                 <label for="type">Selecione o tipo do conteúdo</label>
                 <select v-model="data.type" name="type">
-                    <option value="Active">Active</option>
-                    <option value="Inactive">Inactive</option>
-                    <option value="Maintenance">Maintenance</option>
+                    <option value="ClassRoom">Aula</option>
+                    <option value="Exercise">Atividade</option>
                 </select>
 
                 <label for="moduleId">Selecione o módulo do conteúdo</label>
@@ -140,7 +142,7 @@ export default defineComponent({
                     </ul>
                     <h3>Link do YouTube</h3>
                     <ul>
-                        <input name="urlVideo" type="text" placeholder="Link do YouTube">
+                        <input v-model="data.urlVideo" name="urlVideo" type="text" placeholder="Link do YouTube">
                     </ul>
                 </div>
 

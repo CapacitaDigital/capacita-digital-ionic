@@ -42,6 +42,12 @@ export default defineComponent({
 
         const result = await response.json();
         data.value = result;
+        // Substitua /app/UploadedFiles por /images
+        if ((data.value.urlImage) && (data.value.urlImage.includes('/app/wwwroot'))) {
+          data.value.urlImage = data.value.urlImage.replace('/app/wwwroot', '/');
+        } else if ((data.value.urlImage) && (data.value.urlImage.includes('/images/content'))) {
+          data.value.urlImage = data.value.urlImage.replace('/images/content', '/images');
+        }
         deserializeData(result.activityData); // Supondo que a string JSON esteja em result.activityData
         console.log("Data:", data.value);
       } catch (error) {
@@ -95,16 +101,22 @@ export default defineComponent({
 <template>
   <div class="container">
     <div class="form">
-      <img :src="data.urlImage" alt="abc">
+      <img :src="'http://localhost:8080' + data.urlImage" :alt="data.urlImage">
       <form @submit.prevent="updateData">
+        <label for="title">Título</label>
         <input v-model="data.title" name="title" type="text">
+        <label for="description">Descrição</label>
         <input v-model="data.description" name="description" type="text">
-        <input v-model="data.type" name="type" type="text" placeholder="letra">
+        <label for="type">Tipo</label>
+        <select v-model="data.type" name="type">
+          <option value="ClassRoom">Aula</option>
+          <option value="Exercise">Atividade</option>
+        </select>
 
         <div>
           <h3>{{ data.title }}</h3>
           <ul>
-            <input type="text" class="letras" v-for="(vogal, index) in vogais" :key="index" v-model="vogais[index]"  />
+            <input type="text" class="letras" v-for="(vogal, index) in vogais" :key="index" v-model="vogais[index]" />
           </ul>
           <h3>Audios</h3>
           <ul>
@@ -119,40 +131,85 @@ export default defineComponent({
 
 <style scoped>
 .container {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: scroll;
+}
+
+label {
+    font-size: large;
+    color: #2e2e2e;
+    font-weight: bold;
+}
+
+h3 {
+    font-size: large;
+    color: #2e2e2e;
+    font-weight: bold;
 }
 
 form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    gap: 10px;
+    padding: 5px;
+    color: white;
 }
 
 input {
-  border: 1px solid gray;
+    border: 2px solid brown;
+    color: #2e2e2e;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+input:focus {
+    background-color: brown;
+    border: 2px solid brown;
+    color: white;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+::placeholder {
+    color: gray;
 }
 
 .letras {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  background-color: transparent;
-  height: 50px;
-  width: 50px;
-  border: 1px solid gray;
-  border-radius: 50%;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    background-color: transparent;
+    height: 50px;
+    width: 50px;
+    color: white;
+    border: 1px solid gray;
+    border-radius: 50%;
+}
+
+select {
+    border: 2px solid brown;
+    color: #2e2e2e;
+    border-radius: 5px;
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
 button {
-  margin: 0 auto;
-  height: 30px;
-  width: 100px;
-  border-radius: 5px;
-  color: white;
-  background-color: brown;
-  border: 1px solid gray;
+    margin: 0 auto;
+    height: 60px;
+    width: 300px;
+    line-height: 40px;
+    padding: 10px;
+    font-weight: 600;
+    border-radius: 5px;
+    color: white;
+    background-color: brown;
 }
 </style>
