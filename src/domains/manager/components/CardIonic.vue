@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 
+
 export default defineComponent({
     props: {
         title: {
@@ -23,30 +24,24 @@ export default defineComponent({
             type: String,
             required: false
         },
-        link: {
+        route: {
             type: String,
             required: true
-        }
-    },
-    methods: {
-        nextPage() {
-            window.location.href=`/${this.link}`;
         }
     }
 });
 </script>
 
 <template>
-    <div class="card" @click="nextPage">
+    <RouterLink :to="route" class="card">
         <div v-if="status=='Active' " class="content" :style="{ background: bgColor }">
             <div class="img">
                 <img src="/src/domains/manager/components/globo.svg" alt="globo">
                 <img src="/src/domains/manager/components/fundo.svg" alt="fundo">
             </div>
             <p>{{ title }}</p>
-
         </div>
-    </div>
+    </RouterLink>
 </template>
 
 <style scoped>

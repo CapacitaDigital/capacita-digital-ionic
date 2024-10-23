@@ -14,6 +14,7 @@ const userRoutes: Array<RouteRecordRaw> = [
     name: "exibir categorias para editar",
     component: ShowCategories,
   },
+
   // MODULES ROUTES
   {
     path: "/manager/modules",
@@ -22,6 +23,11 @@ const userRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: "/manager/modules/:id",
+    name: "exibir modulos ",
+    component: ShowModules,
+  },
+  {
+    path: "/manager/modules/edit/:id",
     name: "exibir apenas um modulo para editar",
     component: EditModule,
   },
@@ -33,14 +39,14 @@ const userRoutes: Array<RouteRecordRaw> = [
     component: ShowContents,
   },
   {
-    path: "/manager/contents/:id", 
-    name: "exibir um conteudo apenas para editar",
-    component: ShowOneContent,
-  },
-  {
-    path: "/manager/contents/new", 
+    path: "/manager/contents/create", 
     name: "Tela de create para atividade",
     component: CreateContent,
+  },
+  {
+    path: "/manager/contents/edit/:id", 
+    name: "exibir um conteudo apenas para editar",
+    component: ShowOneContent,
   }
 ];
 

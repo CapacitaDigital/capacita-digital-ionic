@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { IonContent, IonPage, IonGrid, IonRow, IonCol } from '@ionic/vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const router = useRouter();
 

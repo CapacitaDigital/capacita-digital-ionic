@@ -7,6 +7,7 @@ import Buzina from '@/domains/auth/components/Buzina.vue'
 import { falar } from '@/utils/utils';
 const frase = ref('ÁreaDoConhecimento');
 
+
 </script>
 
 <template>

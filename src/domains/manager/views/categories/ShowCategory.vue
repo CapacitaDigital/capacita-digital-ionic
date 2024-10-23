@@ -24,7 +24,6 @@ onMounted(async () => {
     }
 });
 
-
 </script>
 
 <template>
@@ -38,8 +37,13 @@ onMounted(async () => {
                         <h2>Mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardIonic v-for="categoria in categorias" :key="categoria.id" :title="categoria.name"
-                            :status="categoria.status" />
+                        <CardIonic 
+                            v-for="categoria in categorias" 
+                            :key="categoria.id" 
+                            :title="categoria.name"
+                            :status="categoria.status" 
+                            :route="`/manager/modules/${categoria.id}`"
+                        />
                     </div>
 
                 </div>
