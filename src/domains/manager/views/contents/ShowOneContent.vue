@@ -1,29 +1,39 @@
 <script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { defineComponent, onMounted, ref } from "vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   setup() {
     const data = ref({
       id: 0,
-      title: '',
-      description: '',
-      type: '',
-      urlImage: '',
-      urlsDocuments: [], // Add this line
+      document: null as File | null,
+      title: "",
+      description: "",
+      type: "",
+      urlImage: "",
+      urlDocument: [],
+      urlVideo: "",
+      urlsDocuments: [] as string[], // Add this line
       moduleId: 0, // Add this line
       urlsImages: [], // Add this line
       activityData: {} as { [key: string]: any }, // Add this line
-      activityDataSerialized: {}
-
+      activityDataSerialized: {},
     });
 
     const route = useRoute();
 
+    const handleFileChange = (event: Event, type: "document") => {
+      const target = event.target as HTMLInputElement;
+      if (target.files && target.files[0]) {
+        const file = target.files[0];
+        if (type === "document") {
+          data.value.urlsDocuments.push(file.name);
+        }
+      }
+    };
     const deserializeData = (dataString: string) => {
       try {
         data.value.activityData = JSON.parse(dataString);
-
       } catch (error) {
         console.error("Failed to deserialize data:", error);
       }
@@ -39,33 +49,45 @@ export default defineComponent({
     const fetchData = async (id: string) => {
       try {
         const response = await fetch(`http://localhost:8080/api/contents/${id}`, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'accept': 'application/json',
+            accept: "application/json",
           },
         });
 
         if (!response.ok) {
-          throw new Error('Erro ao buscar atividades');
+          throw new Error("Erro ao buscar atividades");
         }
 
         const result = await response.json();
         data.value = result;
         // Substitua /app/UploadedFiles por /images
-        if ((data.value.urlImage) && (data.value.urlImage.includes('/app/wwwroot'))) {
-          data.value.urlImage = data.value.urlImage.replace('/app/wwwroot', '/');
-        } else if ((data.value.urlImage) && (data.value.urlImage.includes('/images/content'))) {
-          data.value.urlImage = data.value.urlImage.replace('/images/content', '/images');
+        if (data.value.urlImage && data.value.urlImage.includes("/app/wwwroot")) {
+          data.value.urlImage = data.value.urlImage.replace("/app/wwwroot", "/");
+        } else if (
+          data.value.urlImage &&
+          data.value.urlImage.includes(
+            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/"
+          )
+        ) {
+          data.value.urlImage = data.value.urlImage.replace(
+            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/images",
+            "/images"
+          );
+        } else if (
+          data.value.urlImage &&
+          data.value.urlImage.includes("/images/images/")
+        ) {
+          data.value.urlImage = data.value.urlImage.replace("/images/images/", "/images");
         }
         deserializeData(result.activityData); // Supondo que a string JSON esteja em result.activityData
-
       } catch (error) {
         console.error(error);
       }
     };
     const addArrayItem = (key: string) => {
       if (Array.isArray(data.value.activityData[key])) {
-        data.value.activityData[key].push('');
+        data.value.activityData[key].push("");
       }
     };
 
@@ -76,15 +98,15 @@ export default defineComponent({
     };
     const fetchUrlImages = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/images', {
-          method: 'GET',
+        const response = await fetch("http://localhost:8080/api/images", {
+          method: "GET",
           headers: {
-            'accept': 'application/json',
+            accept: "application/json",
           },
         });
 
         if (!response.ok) {
-          throw new Error('Erro ao buscar imagens');
+          throw new Error("Erro ao buscar imagens");
         }
 
         return await response.json();
@@ -92,90 +114,175 @@ export default defineComponent({
         console.error(error);
       }
     };
-    const remove = async () => {
+    const fetchUrlDocuments = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/contents/${data.value.id}`, {
-          method: 'DELETE',
+        const response = await fetch("http://localhost:8080/api/documents/", {
+          method: "GET",
           headers: {
-            'accept': 'application/json',
+            accept: "application/json",
           },
         });
 
         if (!response.ok) {
-          throw new Error('Erro ao deletar atividades');
+          throw new Error("Erro ao buscar documentos");
         }
-        console.log("atividade deletada!");
-        window.location.href = '/manager/contents';
+
+        const result = await response.json();
+        data.value.urlsDocuments = result;
+        console.log("Documentos:", data.value.urlsDocuments);
       } catch (error) {
         console.error(error);
       }
     };
+    const remove = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/contents/${data.value.id}`,
+          {
+            method: "DELETE",
+            headers: {
+              accept: "application/json",
+            },
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Erro ao deletar atividades");
+        }
+        console.log("atividade deletada!");
+        window.location.href = "/manager/contents";
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     const updateData = async () => {
       try {
         serializeData();
-        const response = await fetch(`http://localhost:8080/api/contents/${data.value.id}`, {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-            'accept': 'application/json',
-          },
-          body: JSON.stringify({
-            id: data.value.id,
-            title: data.value.title,
-            description: data.value.description,
-            type: data.value.type,
-            activityData: data.value.activityDataSerialized,
-            urlImage: data.value.urlImage,
-            urlsDocuments: data.value.urlsDocuments,
-            moduleId: data.value.moduleId
-          })
-        });
+        const response = await fetch(
+          `http://localhost:8080/api/contents/${data.value.id}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              accept: "application/json",
+            },
+            body: JSON.stringify({
+              id: data.value.id,
+              title: data.value.title,
+              description: data.value.description,
+              type: data.value.type,
+              activityData: data.value.activityDataSerialized,
+              urlImage: data.value.urlImage,
+              urlVideo: data.value.urlVideo,
+              urlsDocuments: data.value.urlsDocuments,
+              moduleId: data.value.moduleId,
+            }),
+          }
+        );
         if (!response.ok) {
-          throw new Error('Erro ao atualizar atividades');
+          throw new Error("Erro ao atualizar atividades");
         }
         console.log("dados atualizados!");
-        window.location.href = '/manager/contents';
+        window.location.href = "/manager/contents";
       } catch (error) {
         console.error(error);
+      }
+    };
+    const addDocument = () => {
+      data.value.urlsDocuments.push("");
+    };
+
+    const removeDocument = (index: number) => {
+      data.value.urlsDocuments.splice(index, 1);
+    };
+
+    const uploadDocument = async (file: File) => {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/contents/upload`, {
+          method: "POST",
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro ao fazer upload do arquivo");
+        }
+
+        const result = await response.json();
+        return result.filePath;
+      } catch (error) {
+        console.error(error);
+        return null;
       }
     };
 
     onMounted(() => {
       const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
       fetchData(id);
-      fetchUrlImages().then(images => {
+      fetchUrlDocuments();
+      fetchUrlImages().then((images) => {
         data.value.urlsImages = images;
       });
     });
 
-    return { addArrayItem, removeArrayItem, remove, data, updateData };
-  }
+    return {
+      addArrayItem,
+      removeArrayItem,
+      remove,
+      data,
+      updateData,
+      removeDocument,
+      addDocument,
+      uploadDocument,
+      handleFileChange,
+    };
+  },
 });
 </script>
 
 <template>
   <div class="container">
     <div class="fundo">
-      <img :src="'http://localhost:8080' + data.urlImage" :alt="data.urlImage">
+      <img :src="'http://localhost:8080' + data.urlImage" :alt="data.urlImage" />
     </div>
     <div class="form">
-
-
       <form @submit.prevent="updateData">
-
         <label for="urlImage">Imagem</label>
         <select v-model="data.urlImage" name="urlImage">
-          <option class="option" v-for="image in data.urlsImages" :key="image" :value="image">
+          <option
+            class="option"
+            v-for="image in data.urlsImages"
+            :key="image"
+            :value="image"
+          >
             <li>{{ (image as string).split('/').pop() }}</li>
           </option>
         </select>
 
         <label for="title">Título</label>
-        <input v-model="data.title" name="title" type="text">
+        <input v-model="data.title" name="title" type="text" />
 
         <label for="description">Descrição</label>
-        <input v-model="data.description" name="description" type="text">
+        <input v-model="data.description" name="description" type="text" />
 
+        <div>
+          <label for="urlDocument">Document</label>
+          <br />
+          <select v-model="data.urlDocument" name="urlDocument">
+            <option
+              v-for="document in data.urlsDocuments"
+              :key="document"
+              :value="document"
+            >
+              <li>{{ (document as string).split('/').pop() }}</li>
+            </option>
+          </select>
+        </div>
+        <label for="urlVideo">youtube video</label>
+        <input v-model="data.urlVideo" name="urlvideo" type="text" />
         <label for="type">Tipo</label>
         <select v-model="data.type" name="type">
           <option value="ClassRoom">Aula</option>
@@ -185,25 +292,46 @@ export default defineComponent({
 
         <div>
           <label>Dados da atividade</label>
+
           <h3>{{ data.activityData }}</h3>
           <div v-for="(value, key) in data.activityData" :key="key">
             <label :for="key.toString()">{{ key }}</label>
-            <div class="container-campo" v-if="Array.isArray(value)">
+            <div class="containe-campo" v-if="Array.isArray(value)">
               <div class="campo" v-for="(item, index) in value" :key="index">
                 <div v-if="key == 'vogais'">
-                  <input class="letras" :id="`${key}-${index}`" v-model="data.activityData[key][index]"
-                    @input="data.activityData[key][index] = data.activityData[key][index].toUpperCase()" type="text">
+                  <input
+                    class="letras"
+                    :id="`${key}-${index}`"
+                    v-model="data.activityData[key][index]"
+                    @input="
+                      data.activityData[key][index] = data.activityData[key][
+                        index
+                      ].toUpperCase()
+                    "
+                    type="text"
+                  />
                 </div>
                 <div v-else>
-                  <input :id="`${key}-${index}`" v-model="data.activityData[key][index]" type="text">
-
+                  <input
+                    :id="`${key}-${index}`"
+                    v-model="data.activityData[key][index]"
+                    type="text"
+                  />
                 </div>
-                <button class="remove" type="button" @click="removeArrayItem(key.toString(), index)">Remover</button>
+                <button
+                  class="remove"
+                  type="button"
+                  @click="removeArrayItem(key.toString(), index)"
+                >
+                  Remover
+                </button>
               </div>
-              <button class="create" type="button" @click="addArrayItem(key.toString())">+</button>
+              <button class="create" type="button" @click="addArrayItem(key.toString())">
+                +
+              </button>
             </div>
             <div v-else>
-              <input :id="key.toString()" v-model="data.activityData[key]" type="text">
+              <input :id="key.toString()" v-model="data.activityData[key]" type="text" />
             </div>
           </div>
         </div>
@@ -227,10 +355,10 @@ export default defineComponent({
   justify-content: center;
   align-items: center;
   height: 200px;
-  background-color: transparent
+  background-color: transparent;
 }
 
-.fundo>img {
+.fundo > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -283,7 +411,7 @@ input:focus {
   color: gray;
 }
 
-.container-campo {
+.containe-campo {
   display: flex;
   flex-direction: column;
   gap: 10px;
