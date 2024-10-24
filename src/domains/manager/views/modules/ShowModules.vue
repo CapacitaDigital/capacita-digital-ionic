@@ -1,6 +1,16 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { ref } from 'vue';
+
+interface Module {
+    id: number;
+    title: string;
+    description: string;
+    nivel: string;
+    status: string;
+}
+
+const modules = ref<Module[]>([]);
 import { onMounted } from 'vue';
 import CardModules from '@/domains/manager/components/CardModules.vue';
 
@@ -12,12 +22,12 @@ import CardModules from '@/domains/manager/components/CardModules.vue';
     * 4. Criar uma action no Controller que faça a consulta
 */
 
-const props = defineProps({
-        id: {
-            type: Number,
-            required: true
-        }
-    });
+// const props = defineProps({
+//         id: {
+//             type: Number,
+//             required: true
+//         }
+//     });
 
 onMounted(async () => {
     try {
@@ -49,13 +59,8 @@ onMounted(async () => {
                         <h2>mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModules v-for="module in modules" :key="module.id" 
-                            :id="module.id"
-                            :title="module.title"
-                            :description="module.description"
-                            :nivel="module.nivel"
-                            :status="module.status"
-                         />
+                        <CardModules v-for="module in modules" :key="module.id" :id="module.id" :title="module.title"
+                            :description="module.description" :nivel="module.nivel" :status="module.status" />
                     </div>
 
                 </div>
@@ -141,32 +146,3 @@ onMounted(async () => {
 }
 </style>
 
-<script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
-import { ref } from 'vue';
-import { onMounted } from 'vue';
-import CardModules from '@/domains/manager/components/CardModules.vue';
-
-// Preciso receber o ID e pesquisar o modulo no banco
-
-
-
-const module = ref({});
-
-onMounted(async () => {
-    try {
-        const response = await fetch(`http://localhost:8080/api/modules/${props.id}`, {
-        method: 'GET',
-        headers: {
-            'accept': 'application/json',
-        },
-        });
-        if (!response.ok) {
-            throw new Error('Erro ao buscar modulos');
-        }
-        const data = await response.json();
-        module.value = data;
-    } catch (error) {
-        console.error(error);
-    }
-});

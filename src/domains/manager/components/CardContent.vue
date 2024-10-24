@@ -15,7 +15,7 @@ export default defineComponent({
     },
     methods: {
         NextPage() {
-            window.location.href = `manager/contents/${this.id}`;
+            window.location.href = `manager/contents/edit/${this.id}`;
 
         }
     }

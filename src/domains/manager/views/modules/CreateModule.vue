@@ -61,7 +61,8 @@ const sendModuleToApi = async (module: {
                 <form>
                     <div class="inputs">
                         <label for="titulo">Título do módulo: </label>
-                        <input v-model="titulo" type="text" name="titulo" title="Titulo do Modulo" placeholder="Titulo do Modulo"/>
+                        <input v-model="titulo" type="text" name="titulo" title="Titulo do Modulo"
+                            placeholder="Titulo do Modulo" />
                     </div>
                     <div class="inputs">
                         <label for="nivel">Nível do módulo: </label>
@@ -147,7 +148,8 @@ form {
     max-width: 90%;
 }
 
-input, select {
+input,
+select {
     background-color: #fff;
     border: 2px solid #ccc;
     padding: 0.6rem 1rem;
