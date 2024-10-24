@@ -14,7 +14,7 @@ export default defineComponent({
       moduleId: 0, // Add this line
       urlsImages: [], // Add this line
       activityData: {} as { [key: string]: any }, // Add this line
-      activityDataSerialized: {} 
+      activityDataSerialized: {}
 
     });
 
@@ -190,10 +190,17 @@ export default defineComponent({
             <label :for="key.toString()">{{ key }}</label>
             <div class="container-campo" v-if="Array.isArray(value)">
               <div class="campo" v-for="(item, index) in value" :key="index">
-                <input :id="`${key}-${index}`" v-model="data.activityData[key][index]" @input="data.activityData[key][index] = data.activityData[key][index].toUpperCase()" type="text">
+                <div v-if="key == 'vogais'">
+                  <input class="letras" :id="`${key}-${index}`" v-model="data.activityData[key][index]"
+                    @input="data.activityData[key][index] = data.activityData[key][index].toUpperCase()" type="text">
+                </div>
+                <div v-else>
+                  <input :id="`${key}-${index}`" v-model="data.activityData[key][index]" type="text">
+
+                </div>
                 <button class="remove" type="button" @click="removeArrayItem(key.toString(), index)">Remover</button>
               </div>
-              <button class="create" type="button" @click="addArrayItem(key.toString())">Adicionar Item</button>
+              <button class="create" type="button" @click="addArrayItem(key.toString())">+</button>
             </div>
             <div v-else>
               <input :id="key.toString()" v-model="data.activityData[key]" type="text">
@@ -275,6 +282,7 @@ input:focus {
 ::placeholder {
   color: gray;
 }
+
 .container-campo {
   display: flex;
   flex-direction: column;
@@ -282,30 +290,43 @@ input:focus {
   padding: 5px;
   color: white;
 }
+
 .campo {
   display: flex;
   gap: 10px;
+  padding: 0px;
+  margin: 0px;
   align-items: center;
+  text-align: center;
 }
-.remove{
+
+.remove {
   background-color: red;
   color: white;
   border: 1px solid red;
   border-radius: 5px;
-  padding: 5px;
+  padding: 0px;
   width: 80px;
   height: 50px;
   margin: 0px;
 }
-.create{
+
+.create {
+  display: flex;
+  flex-direction: column;
   background-color: green;
   color: white;
-  border: 1px solid green;
+  border: 1px solid white;
   border-radius: 5px;
-  padding: 5px;
-  width: 80px;
+  padding: 30px;
   height: 50px;
+  width: 50px;
+  border-radius: 50%;
   margin: 0px;
+  justify-content: center;
+  align-items: center;
+  font-size: 60px;
+  font-weight: 200;
 }
 
 .letras {
@@ -314,11 +335,13 @@ input:focus {
   justify-content: center;
   align-items: center;
   padding: 0px;
-  background-color: transparent;
+  margin: 0px;
+  background-color: white;
   height: 50px;
   width: 50px;
-  color: white;
-  border: 1px solid gray;
+  color: black;
+  font-weight: bold;
+  border: 1px solid black;
   border-radius: 50%;
 }
 
