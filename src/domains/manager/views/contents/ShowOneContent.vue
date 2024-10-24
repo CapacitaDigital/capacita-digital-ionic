@@ -190,7 +190,7 @@ export default defineComponent({
             <label :for="key.toString()">{{ key }}</label>
             <div class="container-campo" v-if="Array.isArray(value)">
               <div class="campo" v-for="(item, index) in value" :key="index">
-                <input :id="`${key}-${index}`" v-model="data.activityData[key][index]" type="text">
+                <input :id="`${key}-${index}`" v-model="data.activityData[key][index]" @input="data.activityData[key][index] = data.activityData[key][index].toUpperCase()" type="text">
                 <button class="remove" type="button" @click="removeArrayItem(key.toString(), index)">Remover</button>
               </div>
               <button class="create" type="button" @click="addArrayItem(key.toString())">Adicionar Item</button>
@@ -291,6 +291,16 @@ input:focus {
   background-color: red;
   color: white;
   border: 1px solid red;
+  border-radius: 5px;
+  padding: 5px;
+  width: 80px;
+  height: 50px;
+  margin: 0px;
+}
+.create{
+  background-color: green;
+  color: white;
+  border: 1px solid green;
   border-radius: 5px;
   padding: 5px;
   width: 80px;
