@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { ref } from 'vue';
-import CardIonic from '@/domains/manager/components/CardIonic.vue';
 import { onMounted } from 'vue';
+import CardIonic from '@/domains/manager/components/CardIonic.vue';
 
 const categorias = ref([]);
 
@@ -33,7 +33,7 @@ onMounted(async () => {
                 <div class="areas">
 
                     <div class="title">
-                        <h1>Catgorias</h1>
+                        <h1>Categorias</h1>
                         <h2>Mais recentes</h2>
                     </div>
                     <div class="cards">
@@ -42,7 +42,7 @@ onMounted(async () => {
                             :key="categoria.id" 
                             :title="categoria.name"
                             :status="categoria.status" 
-                            :route="`/manager/modules/${categoria.id}`"
+                            :route="`/manager/categories/${categoria.id}`"
                         />
                     </div>
 

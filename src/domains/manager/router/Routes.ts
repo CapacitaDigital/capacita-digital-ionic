@@ -1,7 +1,9 @@
 import { RouteRecordRaw } from "vue-router";
 
-import ShowCategories from "../views/categories/ShowCategory.vue";
-import ShowModules from "@/domains/manager/views/modules/ShowModules.vue"
+import ShowCategories from "../views/categories/ShowCategories.vue";
+import ShowOneCategory from "../views/categories/ShowOneCategory.vue";
+import ShowModules from "../views/modules/ShowModules.vue";
+import ShowOneModule from "../views/modules/ShowOneModule.vue";
 import EditModule from "@/domains/manager/views/modules/EditModule.vue"
 import ShowContents from "../views/contents/ShowContents.vue";
 import ShowOneContent from "../views/contents/ShowOneContent.vue";
@@ -14,6 +16,11 @@ const userRoutes: Array<RouteRecordRaw> = [
     name: "exibir categorias para editar",
     component: ShowCategories,
   },
+  {
+    path: "/manager/categories/:id",
+    name: "exibir categoria por id",
+    component: ShowOneCategory,
+  },
 
   // MODULES ROUTES
   {
@@ -23,8 +30,8 @@ const userRoutes: Array<RouteRecordRaw> = [
   },
   {
     path: "/manager/modules/:id",
-    name: "exibir modulos ",
-    component: ShowModules,
+    name: "exibir modulo por id",
+    component: ShowOneModule,
   },
   {
     path: "/manager/modules/edit/:id",

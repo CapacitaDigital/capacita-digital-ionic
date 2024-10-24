@@ -1,33 +1,10 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from '@ionic/vue';
 import { ref } from 'vue';
-
-interface Module {
-    id: number;
-    title: string;
-    description: string;
-    nivel: string;
-    status: string;
-}
-
-const modules = ref<Module[]>([]);
+import CardIonic from '@/domains/manager/components/CardIonic.vue';
 import { onMounted } from 'vue';
-import CardModules from '@/domains/manager/components/CardModules.vue';
 
-/*
-    * Tasks necessárias
-    * 1. Buscar todas os modulos relacionados a categoria 
-    * 2. Reutilizar esse componente
-    * 3. Montar a consulta => SELECT * FROM modules WHARE categioriaId = {{ categoria.id }};
-    * 4. Criar uma action no Controller que faça a consulta
-*/
-
-// const props = defineProps({
-//         id: {
-//             type: Number,
-//             required: true
-//         }
-//     });
+const modules = ref([]);
 
 onMounted(async () => {
     try {
@@ -54,16 +31,24 @@ onMounted(async () => {
         <ion-content>
             <div class="content">
                 <div class="areas">
+
                     <div class="title">
-                        <h1>Português</h1>
-                        <h2>mais recentes</h2>
+                        <h1>Módulos</h1>
+                        <h2>Mais recentes</h2>
                     </div>
                     <div class="cards">
-                        <CardModules v-for="module in modules" :key="module.id" :id="module.id" :title="module.title"
-                            :description="module.description" :nivel="module.nivel" :status="module.status" />
+                        <CardIonic 
+                            v-for="module in modules" 
+                            :key="module.id" 
+                            :title="module.title"
+                            :status="module.status" 
+                            :route="`/manager/modules/${module.id}`"
+                        />
                     </div>
 
                 </div>
+
+
 
             </div>
         </ion-content>
@@ -80,17 +65,10 @@ onMounted(async () => {
     font-family: "Poppins", sans-serif;
 }
 
-.img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-.content {
-    position: relative;
+.areas {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     width: 100vw;
     height: 100vh;
     background: #FFF;
@@ -98,9 +76,17 @@ onMounted(async () => {
     padding-left: 1rem;
 }
 
-.navButton {
-    position: absolute;
-    bottom: 0;
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 1rem;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background: #FFF;
+    border-radius: 40px 0 0 0;
+    padding-left: 1rem;
 }
 
 .title {
@@ -126,9 +112,7 @@ onMounted(async () => {
 .cards {
     margin-top: 1rem;
     display: flex;
-    flex-wrap: wrap;
     gap: 0.8rem;
-    margin-bottom: 1rem;
 }
 
 
@@ -145,4 +129,3 @@ onMounted(async () => {
     gap: 0.2rem;
 }
 </style>
-
