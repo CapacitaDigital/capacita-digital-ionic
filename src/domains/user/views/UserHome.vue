@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { IonContent, IonPage } from '@ionic/vue';
-import NavBotton from '@/domains/portuguese/components/NavBotton.vue';
-import CardEmpty from '@/domains/user/components/CardEmpty.vue';
-import Header from '@/domains/reasoning/components/Header.vue';
-import { ref, onMounted } from 'vue';
-import Buzina from '@/domains/auth/components/Buzina.vue';
-import CardIonic from '@/domains/manager/components/CardIonic.vue';
+import { IonContent, IonPage } from "@ionic/vue";
+import NavBotton from "@/domains/portuguese/components/NavBotton.vue";
+import CardEmpty from "@/domains/user/components/CardEmpty.vue";
+import Header from "@/domains/reasoning/components/Header.vue";
+import { ref, onMounted } from "vue";
+import Buzina from "@/domains/auth/components/Buzina.vue";
+import CardIonic from "@/domains/manager/components/CardIonic.vue";
 
-const frase = ref('SeleçãoTema');
+const frase = ref("SeleçãoTema");
 interface Categoria {
   id: number;
   name: string;
@@ -21,10 +21,10 @@ const categorias = ref<Categoria[]>([]);
 
 const fetchCategorias = async () => {
   try {
-    const response = await fetch('http://localhost:8080/api/categories/', {
-      method: 'GET',
+    const response = await fetch("http://localhost:8080/api/categories/", {
+      method: "GET",
       headers: {
-        'Accept': 'application/json'
+        Accept: "application/json",
       },
     });
     if (!response.ok) {
@@ -34,7 +34,7 @@ const fetchCategorias = async () => {
     console.log(data);
     categorias.value = data;
   } catch (error) {
-    console.error('Erro ao buscar categorias:', error);
+    console.error("Erro ao buscar categorias:", error);
   }
 };
 
@@ -52,13 +52,20 @@ onMounted(() => {
       </div>
 
       <div id="container">
-        <CardIonic v-for="categoria in categorias" :key="categoria.id" :id="categoria.id.toString()"  :name="categoria.name"
-          :description="categoria.description" :status="categoria.status" :userId="categoria.userId.toString()" :urlImage="categoria.urlImage"
-          :title="categoria.name" :link="'user/modules'" />
-          <CardEmpty message="Criar categoria"  />
+        <CardIonic
+          v-for="categoria in categorias"
+          :key="categoria.id"
+          :id="categoria.id.toString()"
+          :name="categoria.name"
+          :description="categoria.description"
+          :status="categoria.status"
+          :userId="categoria.userId.toString()"
+          :urlImage="categoria.urlImage"
+          :title="categoria.name"
+          :link="'user/modules'"
+        />
+        <CardEmpty message="Criar categoria" />
       </div>
-
-
     </ion-content>
     <div id="navButton">
       <NavBotton />
