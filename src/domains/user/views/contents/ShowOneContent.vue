@@ -87,7 +87,19 @@ export default defineComponent({
             "/images"
           );
         }
-        if (content.value.urlDocument) deserializecontent(result.activityData); // Supondo que a string JSON esteja em result.activityData
+        content.value.urlDocument = content.value.urlsDocuments[0];
+        if (
+          content.value.urlDocument &&
+          content.value.urlDocument.includes(
+            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/"
+          )
+        ) {
+          content.value.urlDocument = content.value.urlDocument.replace(
+            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/",
+            "/"
+          );
+        }
+        deserializecontent(result.activityData); // Supondo que a string JSON esteja em result.activityData
       } catch (error) {
         console.error(error);
       }
@@ -117,16 +129,14 @@ export default defineComponent({
         <p>{{ content.description }}</p>
       </div>
 
-      <div class="documents" v-if="content.urlsDocuments.length > 0">
+      <div class="documents" v-if="content.urlDocument">
         <label for="urlDocument">Documentos</label>
         <br />
-        <a
-          v-for="(urlDocument, index) in content.urlsDocuments"
-          :key="index"
-          :href="'http://localhost:8080' + urlDocument"
-          target="_blank"
-          >{{ urlDocument }}</a
-        >
+        <button>
+          <a :href="'http://localhost:8080' + content.urlDocument" target="_blank">{{
+            content.urlDocument
+          }}</a>
+        </button>
       </div>
 
       <label for="urlVideo">Video do YouTube</label>
@@ -160,7 +170,34 @@ export default defineComponent({
   height: 315px;
   /* Altura padrão para vídeos do YouTube */
 }
-
+.documents {
+  margin-top: 20px;
+}
+.documents > label {
+  font-size: large;
+  color: #2e2e2e;
+  font-weight: bold;
+}
+.documents > button > a {
+  color: white;
+  font-weight: 600;
+}
+.documents > button {
+  margin-top: 10px;
+  height: 60px;
+  line-height: 40px;
+  padding: 10px;
+  font-weight: 600;
+  border-radius: 5px;
+  color: black;
+  border: 1px solid #2e2e2e;
+  background-color: #2e2e2e;
+  transition: 0.5s;
+}
+button:hover {
+  transition: 0.5s;
+  background-color: brown;
+}
 .youtube-video iframe {
   width: 100%;
   height: 100%;
