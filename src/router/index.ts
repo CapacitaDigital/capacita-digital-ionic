@@ -2,38 +2,27 @@
 
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import { RouteRecordRaw } from "vue-router";
-import Welcome from "@/domains/user/views/Welcome.vue";
-import Login from "../domains/auth/views/Login.vue";
-import Person from "@/domains/auth/views/Person.vue";
+import Welcome from "user/views/Welcome.vue";
+import Login from "auth/views/Login.vue";
+import Person from "auth/views/Person.vue";
 
 // Routes of domains
 
-import authRoutes from "@/domains/auth/router/auth";
-import managerRoutes from "@/domains/manager/router/Routes";
-import userRoutes from "@/domains/user/router/userRoutes";
+import authRoutes from "auth/router/index";
+import managerRoutes from "manager/router/index";
+import userRoutes from "user/router/index";
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: "/",
-    name: "Welcome",
-    component: Welcome,
-  },
-  {
-    path: "/login",
-    name: "Login",
-    component: Login,
-  },
-  {
-    path: "/person",
-    name: "Person",
-    component: Person,
-  },
+  
+  { path: "/", component: Welcome },
+  { path: "/login", component: Login },
+  { path: "/person", component: Person },
 
   // Routes of domains
 
-  ...authRoutes, //routes of auth
-  ...managerRoutes, //routes of manager
-  ...userRoutes, //routes of user
+  ...authRoutes, 
+  ...managerRoutes, 
+  ...userRoutes, 
 ];
 
 const router = createRouter({

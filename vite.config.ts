@@ -14,10 +14,13 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
       'public': path.resolve(__dirname, './public'),
       'img': path.resolve(__dirname, './public/img'),
+      'manager': path.resolve(__dirname, './src/sections/active/manager'),
+      'auth': path.resolve(__dirname, './src/sections/disabled/auth'),
+      'portuguese': path.resolve(__dirname, './src/sections/disabled/portuguese'),
+      'reasoning': path.resolve(__dirname, './src/sections/disabled/reasoning'),
+      'teacher': path.resolve(__dirname, './src/sections/disabled/teacher'),
+      'technology': path.resolve(__dirname, './src/sections/disabled/technology'),
+      'user': path.resolve(__dirname, './src/sections/disabled/user'),
     },
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom'
   }
 })
