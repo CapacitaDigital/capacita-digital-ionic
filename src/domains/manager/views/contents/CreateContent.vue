@@ -85,7 +85,6 @@ export default defineComponent({
         data.value.urlsDocumentsPaths = await Promise.all(
           data.value.urlsDocuments.map(uploadFile)
         ); // Array de Promises que retorna um array de strings com os paths dos documentos enviados para o servidor
-        console.log(data.value.urlsDocumentsPaths);
         serializeActivityData();
         const response = await fetch(`http://localhost:8080/api/contents`, {
           method: "POST",
@@ -104,11 +103,9 @@ export default defineComponent({
             ModuleId: data.value.moduleId,
           }),
         });
-        console.log(data.value.title);
         if (!response.ok) {
           throw new Error("Erro ao criar conteúdo");
         }
-        console.log("Conteúdo criado: ", response);
         window.location.href = "/manager/contents";
       } catch (error) {
         console.error(error);

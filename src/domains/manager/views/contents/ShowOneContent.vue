@@ -11,8 +11,8 @@ export default defineComponent({
       description: "",
       type: "",
       urlImage: "",
-      urlDocument: [],
       urlVideo: "",
+      urlDocument: "",
       urlsDocuments: [] as string[], // Add this line
       moduleId: 0, // Add this line
       urlsImages: [], // Add this line
@@ -271,15 +271,11 @@ export default defineComponent({
         <div>
           <label for="urlDocument">Document</label>
           <br />
-          <select v-model="data.urlDocument" name="urlDocument">
-            <option
-              v-for="document in data.urlsDocuments"
-              :key="document"
-              :value="document"
-            >
-              <li>{{ (document as string).split('/').pop() }}</li>
-            </option>
-          </select>
+          <input
+            type="file"
+            name="urlDocument"
+            @change="handleFileChange($event, 'document')"
+          />
         </div>
         <label for="urlVideo">youtube video</label>
         <input v-model="data.urlVideo" name="urlvideo" type="text" />
