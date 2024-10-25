@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-
+import { RouterLink, useRouter } from 'vue-router';
+import { ref } from 'vue';
 
 export default defineComponent({
     props: {
@@ -28,12 +29,26 @@ export default defineComponent({
             type: String,
             required: true
         }
+    },
+
+    setup(props) {
+        const router = useRouter();
+
+        function click() {
+            router.push({ path: props.route }); 
+        }
+
+        return {
+            click
+        };
     }
 });
+
+
 </script>
 
 <template>
-    <RouterLink :to="route" class="card">
+   <div @click="click" class="card">
         <div v-if="status=='Active' " class="content" :style="{ background: bgColor }">
             <div class="img">
                 <img src="img/components/globo.svg" alt="globo">
@@ -41,7 +56,7 @@ export default defineComponent({
             </div>
             <p>{{ title }}</p>
         </div>
-    </RouterLink>
+    </div>
 </template>
 
 <style scoped>

@@ -3,12 +3,18 @@ import { IonContent, IonPage } from '@ionic/vue';
 import { ref } from 'vue';
 import CardIonic from 'manager/components/CardIonic.vue';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
 
 const modules = ref([]);
 
+const $route = useRoute();
+
 onMounted(async () => {
+
+    const id = $route.params.id;
+    
     try {
-        const response = await fetch('http://localhost:8080/api/modules', {
+        const response = await fetch(`http://localhost:8080/api/modules/categories/${id}`, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
@@ -42,14 +48,10 @@ onMounted(async () => {
                             :key="module.id" 
                             :title="module.title"
                             :status="module.status" 
-                            :route="`/manager/modules/${module.id}`"
+                            :route="`/contents/modules/${module.id}`"
                         />
                     </div>
-
                 </div>
-
-
-
             </div>
         </ion-content>
     </ion-page>

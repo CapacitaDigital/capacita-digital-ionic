@@ -42,7 +42,7 @@ onMounted(async () => {
                             :key="categoria.id" 
                             :title="categoria.name"
                             :status="categoria.status" 
-                            :route="`/manager/categories/${categoria.id}`"
+                            :route="`/modules/categories/${categoria.id}`"
                         />
                     </div>
 

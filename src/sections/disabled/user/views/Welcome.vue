@@ -20,9 +20,12 @@ function route(frase: string) {
         <ion-content>
             <Buzina :frase="frase" />
             <div class="img">
-                <img src="img/capas/livro.jpeg" alt="Capacita Digital" />
+                <img src="img/capas/BG.png" alt="Capacita Digital" />
             </div>
             <div class="back"></div>
+            <div>
+                <img class="logo" src="img/components/logo.svg" alt="Capacita Digital" />
+            </div>
             <div class="title">
                 <h1>Capacita Digital</h1>
                 <p>Criando pontes para o ensino e superando <br> as barreiras do saber</p>
@@ -52,6 +55,13 @@ function route(frase: string) {
     z-index: -1;
 }
 
+.logo {
+    position: absolute;
+    top: 33%;
+    left: 21%;
+    width: 14rem;
+}
+
 .back {
     position: absolute;
     top: 0;
@@ -65,7 +75,7 @@ function route(frase: string) {
 .title {
     position: absolute;
     width: 90%;
-    top: 58%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -91,7 +101,7 @@ function route(frase: string) {
 
 .route {
     position: absolute;
-    bottom: 22%;
+    bottom: 24%;
     --background: blueviolet;
     color: azure;
     width: 100%;

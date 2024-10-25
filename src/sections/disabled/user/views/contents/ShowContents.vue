@@ -3,6 +3,7 @@ import { IonContent, IonPage } from "@ionic/vue";
 import CardContent from "../../components/CardContent.vue";
 import { ref } from "vue";
 import { onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 interface Content {
   id: number;
@@ -10,10 +11,14 @@ interface Content {
 }
 
 const contents = ref<Content[]>([]);
+const $route = useRoute();
 
 onMounted(async () => {
+
+  const id = $route.params.id;
+
   try {
-    const response = await fetch("http://localhost:8080/api/contents", {
+    const response = await fetch(`http://localhost:8080/api/contents/modules/${id}`, {
       method: "GET",
       headers: {
         accept: "application/json",
@@ -36,7 +41,7 @@ onMounted(async () => {
       <div class="content">
         <div class="areas">
           <div class="title">
-            <h1>atividades</h1>
+            <h1>Atividades</h1>
             <h2>mais recentes</h2>
           </div>
           <div class="cards">
@@ -58,7 +63,7 @@ onMounted(async () => {
 @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 
 * {
-  /* Removed the  
+/* Removed the  
  global background setting */
   font-family: "Poppins", sans-serif;
 }
