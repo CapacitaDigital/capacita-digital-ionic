@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { IonContent, IonPage } from "@ionic/vue";
 import { ref } from "vue";
-import CardIonic from "manager/components/CardIonic.vue";
+import CardIonic from "../../components/CardIonic2.vue";
 import { onMounted } from "vue";
 import { useRoute } from "vue-router";
-
 
 interface Module {
   id: number;
@@ -16,7 +15,6 @@ const modules = ref<Module[]>([]);
 const $route = useRoute();
 
 onMounted(async () => {
-  
   const id = $route.params.id;
 
   try {
@@ -52,7 +50,7 @@ onMounted(async () => {
               :key="module.id"
               :title="module.title"
               :status="module.status"
-              :route="`/modules/contents/${module.id}`"
+              :route="`/user/contents/m/${module.id}`"
             />
           </div>
         </div>

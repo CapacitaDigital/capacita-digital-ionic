@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
+import { adjustUrlYoutube } from "../../utils/adjustUrlYoutube";
 
 export default defineComponent({
   setup() {
@@ -13,10 +14,10 @@ export default defineComponent({
       urlImage: "",
       urlVideo: "",
       urlDocument: "",
-      urlsDocuments: [] as string[], 
-      moduleId: 0, 
-      urlsImages: [], 
-      activityData: {} as { [key: string]: any }, 
+      urlsDocuments: [] as string[],
+      moduleId: 0,
+      urlsImages: [],
+      activityData: {} as { [key: string]: any },
       activityDataSerialized: {},
     });
 
@@ -114,6 +115,7 @@ export default defineComponent({
         console.error(error);
       }
     };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchUrlDocuments = async () => {
       try {
         const response = await fetch("http://localhost:8080/api/documents/", {
@@ -159,6 +161,7 @@ export default defineComponent({
     const updateData = async () => {
       try {
         serializeData();
+        data.value.urlVideo = adjustUrlYoutube(data.value.urlVideo);
         const response = await fetch(
           `http://localhost:8080/api/contents/${data.value.id}`,
           {
@@ -176,7 +179,7 @@ export default defineComponent({
               urlImage: data.value.urlImage,
               urlVideo: data.value.urlVideo,
               urlsDocuments: data.value.urlsDocuments,
-              moduleId: data.value.moduleId,
+              ModuleId: data.value.moduleId,
             }),
           }
         );
@@ -222,7 +225,7 @@ export default defineComponent({
     onMounted(() => {
       const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
       fetchData(id);
-      fetchUrlDocuments();
+      // fetchUrlDocuments();
       fetchUrlImages().then((images) => {
         data.value.urlsImages = images;
       });
@@ -268,18 +271,10 @@ export default defineComponent({
         <label for="description">Descrição</label>
         <input v-model="data.description" name="description" type="text" />
 
-        <div>
-          <label for="urlDocument">Document</label>
-          <br />
-          <input
-            type="file"
-            name="urlDocument"
-            @change="handleFileChange($event, 'document')"
-          />
-        </div>
         <label for="urlVideo">youtube video</label>
         <input v-model="data.urlVideo" name="urlvideo" type="text" />
         <label for="type">Tipo</label>
+
         <select v-model="data.type" name="type">
           <option value="ClassRoom">Aula</option>
           <option value="Exercise">Atividade</option>

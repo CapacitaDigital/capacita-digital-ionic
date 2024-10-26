@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted } from "vue";
+import { adjustUrlYoutube } from "../../utils/adjustUrlYoutube";
 
 export default defineComponent({
   setup() {
@@ -86,6 +87,7 @@ export default defineComponent({
           data.value.urlsDocuments.map(uploadFile)
         ); // Array de Promises que retorna um array de strings com os paths dos documentos enviados para o servidor
         serializeActivityData();
+        data.value.urlVideo = adjustUrlYoutube(data.value.urlVideo);
         const response = await fetch(`http://localhost:8080/api/contents`, {
           method: "POST",
           headers: {

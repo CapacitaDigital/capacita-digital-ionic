@@ -2,7 +2,7 @@
 import { IonContent, IonPage } from "@ionic/vue";
 import { ref } from "vue";
 import { onMounted } from "vue";
-import CardIonic from "manager/components/CardIonic.vue";
+import CardIonic from "../../components/CardIonic2.vue";
 
 interface Categoria {
   id: number;
@@ -46,7 +46,7 @@ onMounted(async () => {
               :key="categoria.id"
               :title="categoria.name"
               :status="categoria.status"
-              :route="`/modules/categories/${categoria.id}`"
+              :route="`/user/modules/c/${categoria.id}`"
             />
           </div>
         </div>

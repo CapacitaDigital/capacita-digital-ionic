@@ -4,10 +4,10 @@ import ShowCategories from "../views/categories/ShowCategories.vue";
 import ShowOneCategory from "../views/categories/ShowOneCategory.vue";
 import ShowModules from "../views/modules/ShowModules.vue";
 import ShowOneModule from "../views/modules/ShowOneModule.vue";
-import EditModule from "manager/views/modules/EditModule.vue"
+import EditModule from "../../manager/views/modules/EditModule.vue"
 import ShowContents from "../views/contents/ShowContents.vue";
 import ShowOneContent from "../views/contents/ShowOneContent.vue";
-import CreateContent from "manager/views/contents/CreateContent.vue";
+import CreateContent from "../../manager/views/contents/CreateContent.vue";
 
 const userRoutes: Array<RouteRecordRaw> = [
 
@@ -19,13 +19,11 @@ const userRoutes: Array<RouteRecordRaw> = [
   { path: "/manager/modules", component: ShowModules },
   { path: "/manager/modules/:id", component: ShowOneModule },
   { path: "/manager/modules/edit/:id", component: EditModule },
-  { path: "/modules/categories/:id", component: ShowModules },
 
   // ------------ CONTENTS ROUTES -------------- //
   { path: "/manager/contents", component: ShowContents },
   { path: "/manager/contents/create", component: CreateContent },
   { path: "/manager/contents/edit/:id", component: ShowOneContent },
-  { path: "/contents/modules/:id", component: ShowContents },
 
 
 ];
