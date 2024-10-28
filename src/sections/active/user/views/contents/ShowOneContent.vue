@@ -1,4 +1,7 @@
 <script lang="ts">
+import { adjusteUrlFiles } from "@/utils/adjusteUrlFiles";
+import { deserializecontent } from "@/utils/deserialize";
+import { falar } from "@/utils/utils";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -10,7 +13,6 @@ export default defineComponent({
       description: "",
       type: "",
       activityData: {},
-      activityDataSerialized: "",
       urlImage: "",
       urlVideo: "",
       urlDocument: "",
@@ -18,14 +20,6 @@ export default defineComponent({
       moduleId: 0,
     });
     const route = useRoute();
-
-    const deserializecontent = (activityData: string) => {
-      try {
-        content.value.activityData = JSON.parse(activityData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
 
     const fetchData = async (id: string) => {
       try {
@@ -42,64 +36,13 @@ export default defineComponent({
 
         const result = await response.json();
         content.value = result;
-        console.log(content.value);
 
-        // Substitua /app/UploadedFiles por /images
-        if (content.value.urlImage && content.value.urlImage.includes("/app/wwwroot")) {
-          content.value.urlImage = content.value.urlImage.replace("/app/wwwroot", "/");
-        } else if (
-          content.value.urlImage &&
-          content.value.urlImage.includes(
-            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/"
-          )
-        ) {
-          content.value.urlImage = content.value.urlImage.replace(
-            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/images",
-            "/images"
-          );
-        } else if (
-          content.value.urlImage &&
-          content.value.urlImage.includes("/images/images/")
-        ) {
-          content.value.urlImage = content.value.urlImage.replace(
-            "/images/images/",
-            "/images"
-          );
-        }
-        if (content.value.urlImage && content.value.urlImage.includes("/app/wwwroot")) {
-          content.value.urlImage = content.value.urlImage.replace("/app/wwwroot", "/");
-        } else if (
-          content.value.urlImage &&
-          content.value.urlImage.includes(
-            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/"
-          )
-        ) {
-          content.value.urlImage = content.value.urlImage.replace(
-            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/images",
-            "/images"
-          );
-        } else if (
-          content.value.urlImage &&
-          content.value.urlImage.includes("/images/images/")
-        ) {
-          content.value.urlImage = content.value.urlImage.replace(
-            "/images/images/",
-            "/images"
-          );
-        }
-        content.value.urlDocument = content.value.urlsDocuments[0];
-        if (
-          content.value.urlDocument &&
-          content.value.urlDocument.includes(
-            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/"
-          )
-        ) {
-          content.value.urlDocument = content.value.urlDocument.replace(
-            "/home/double/Repo/CapacitaDigital/CapacitaDigitalApi/wwwroot/",
-            "/"
-          );
-        }
-        deserializecontent(result.activityData); // Supondo que a string JSON esteja em result.activityData
+        content.value.urlDocument = adjusteUrlFiles(
+          content.value.urlsDocuments[0],
+          "document"
+        );
+        content.value.urlImage = adjusteUrlFiles(content.value.urlImage, "image");
+        content.value.activityData = deserializecontent(result.activityData); // Supondo que a string JSON esteja em result.activityData
       } catch (error) {
         console.error(error);
       }
@@ -110,7 +53,7 @@ export default defineComponent({
       fetchData(id);
     });
 
-    return { content };
+    return { content, falar };
   },
 });
 </script>
@@ -138,7 +81,22 @@ export default defineComponent({
           }}</a>
         </button>
       </div>
-
+      <div class="container-letras">
+        <ul v-for="(prop, type) in content.activityData" :key="type">
+          <label v-if="type != 'urlSounds'" :for="type"> {{ type }}</label>
+          <div :class="'container-' + type">
+            <button
+              @click="() => falar(String(letra))"
+              v-if="type != 'urlSounds'"
+              :class="type"
+              v-for="(letra, index) in prop"
+              :key="index"
+            >
+              {{ letra }}
+            </button>
+          </div>
+        </ul>
+      </div>
       <label for="urlVideo">Video do YouTube</label>
       <div class="youtube-video">
         <iframe
@@ -164,24 +122,64 @@ export default defineComponent({
   overflow: scroll;
 }
 
+.container-vogais,
+.container-consoantes,
+.container-alfabeto {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: initial;
+  justify-content: flex-start;
+  padding: 50px 10px;
+}
+
+p {
+  color: black;
+  font-weight: bold;
+}
+
+.vogais,
+.consoantes,
+.alfabeto {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  padding: 0px;
+  margin: 0px;
+  background-color: white;
+  height: 80px;
+  width: 80px;
+  color: black;
+  font-size: 50px;
+  font-weight: 200;
+  border: 1px solid black;
+  border-radius: 50%;
+}
+
 .youtube-video {
   margin-top: 20px;
   width: 100%;
   height: 315px;
   /* Altura padrão para vídeos do YouTube */
 }
+
 .documents {
   margin-top: 20px;
 }
+
 .documents > label {
   font-size: large;
   color: #2e2e2e;
   font-weight: bold;
 }
+
 .documents > button > a {
   color: white;
   font-weight: 600;
 }
+
 .documents > button {
   margin-top: 10px;
   height: 60px;
@@ -194,10 +192,12 @@ export default defineComponent({
   background-color: #2e2e2e;
   transition: 0.5s;
 }
+
 button:hover {
   transition: 0.5s;
   background-color: brown;
 }
+
 .youtube-video iframe {
   width: 100%;
   height: 100%;
@@ -237,7 +237,7 @@ h3 {
 form {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   gap: 10px;
   padding: 5px;
   color: white;
@@ -308,22 +308,6 @@ input:focus {
   align-items: center;
   font-size: 60px;
   font-weight: 200;
-}
-
-.letras {
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-  margin: 0px;
-  background-color: white;
-  height: 50px;
-  width: 50px;
-  color: black;
-  font-weight: bold;
-  border: 1px solid black;
-  border-radius: 50%;
 }
 
 select {

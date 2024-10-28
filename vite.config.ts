@@ -20,7 +20,7 @@ export default defineConfig({
       'reasoning': path.resolve(__dirname, './src/sections/disabled/reasoning'),
       'teacher': path.resolve(__dirname, './src/sections/disabled/teacher'),
       'technology': path.resolve(__dirname, './src/sections/disabled/technology'),
-      'user': path.resolve(__dirname, './src/sections/disabled/user'),
+      'user': path.resolve(__dirname, './src/sections/active/user'),
     },
   }
 })
