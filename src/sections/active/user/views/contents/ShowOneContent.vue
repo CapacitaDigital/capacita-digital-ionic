@@ -2,6 +2,7 @@
 import { adjusteUrlFiles } from "@/utils/adjusteUrlFiles";
 import { deserializecontent } from "@/utils/deserialize";
 import { falar } from "@/utils/utils";
+import { verifica, start } from "@/utils/verifica";
 import { defineComponent, onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 
@@ -53,7 +54,7 @@ export default defineComponent({
       fetchData(id);
     });
 
-    return { content, falar };
+    return { content, falar, verifica, start };
   },
 });
 </script>
@@ -81,7 +82,10 @@ export default defineComponent({
           }}</a>
         </button>
       </div>
-      <div class="container-letras">
+      <div
+        v-if="content.type == 'Assets' || content.type == 'ClassRoom'"
+        class="container-letras"
+      >
         <ul v-for="(prop, type) in content.activityData" :key="type">
           <label v-if="type != 'urlSounds'" :for="type"> {{ type }}</label>
           <div :class="'container-' + type">
@@ -97,6 +101,26 @@ export default defineComponent({
           </div>
         </ul>
       </div>
+      <div v-if="content.type == 'Exercise'" class="container-letras">
+        <ul v-for="(prop, type) in content.activityData" :key="type">
+          <label v-if="type != 'urlSounds'" :for="type"> {{ type }}</label>
+          <button v-if="type != 'urlSounds'" @click="() => start(prop)" class="start">
+            iniciar atividade
+          </button>
+          <div :class="'container-' + type">
+            <button
+              @click="() => verifica(String(letra), content.moduleId)"
+              v-if="type != 'urlSounds'"
+              :class="type"
+              v-for="(letra, index) in prop"
+              :key="index"
+            >
+              {{ letra }}
+            </button>
+          </div>
+        </ul>
+      </div>
+
       <label for="urlVideo">Video do YouTube</label>
       <div class="youtube-video">
         <iframe
@@ -120,6 +144,7 @@ export default defineComponent({
   flex-direction: column;
   height: 100%;
   overflow: scroll;
+  text-align: center;
 }
 
 .container-vogais,
@@ -130,13 +155,21 @@ export default defineComponent({
   flex-wrap: wrap;
   gap: 5px;
   align-items: initial;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 50px 10px;
 }
 
 p {
   color: black;
   font-weight: bold;
+}
+ul {
+  text-align: center;
+  margin-top: 10px;
+}
+.start {
+  background-color: red;
+  margin: 0 auto;
 }
 
 .vogais,

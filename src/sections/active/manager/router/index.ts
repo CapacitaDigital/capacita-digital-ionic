@@ -19,11 +19,15 @@ const userRoutes: Array<RouteRecordRaw> = [
   { path: "/manager/modules", component: ShowModules },
   { path: "/manager/modules/:id", component: ShowOneModule },
   { path: "/manager/modules/edit/:id", component: EditModule },
+  { path: "/manager/modules/c/:id", component: ShowModules },
+
 
   // ------------ CONTENTS ROUTES -------------- //
   { path: "/manager/contents", component: ShowContents },
   { path: "/manager/contents/create", component: CreateContent },
   { path: "/manager/contents/edit/:id", component: ShowOneContent },
+  { path: "/manager/contents/m/:id", component: ShowContents }, //mostra apenas as aulas do modulo selecionado
+
 
 
 ];
