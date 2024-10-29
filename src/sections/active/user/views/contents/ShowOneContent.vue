@@ -4,6 +4,7 @@ import { deserializecontent } from "@/utils/deserialize";
 import { falar } from "@/utils/utils";
 import { verifica, start } from "@/utils/verifica";
 import { defineComponent, onMounted, ref } from "vue";
+import VideoAula from "../../components/contents/Video.vue";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
@@ -24,7 +25,7 @@ export default defineComponent({
 
     const fetchData = async (id: string) => {
       try {
-        const response = await fetch(`http://localhost:8080/api/contents/${id}`, {
+        const response = await fetch(`http://192.168.18.101:8080/api/contents/${id}`, {
           method: "GET",
           headers: {
             accept: "application/json",
@@ -43,7 +44,7 @@ export default defineComponent({
           "document"
         );
         content.value.urlImage = adjusteUrlFiles(content.value.urlImage, "image");
-        content.value.activityData = deserializecontent(result.activityData); // Supondo que a string JSON esteja em result.activityData
+        content.value.activityData = deserializecontent(result.activityData); 
       } catch (error) {
         console.error(error);
       }
@@ -60,28 +61,32 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="container">
-    <div class="fundo">
-      <img :src="'http://localhost:8080' + content.urlImage" :alt="content.urlImage" />
+  <div class="containe">
+    <div class="background">
+          <iframe class="youtube-video"
+              width="560"
+              height="315"
+              :src="content.urlVideo"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+          ></iframe>
     </div>
+
     <div class="form">
-      <div class="title">
-        <h1 for="title">{{ content.title }}</h1>
+      <div class="info">
+        <h1 class="title" for="title">{{ content.title }}</h1>
+        <p class="description">{{ content.description }}</p>
+
+        <div class="documents" v-if="content.urlDocument">
+            <a :href="'http://localhost:8080' + content.urlDocument" target="_blank">
+              <img class="icon" src="img/icons/pdf.svg"> 
+            </a>
+        </div>
       </div>
 
-      <div class="description">
-        <p>{{ content.description }}</p>
-      </div>
-
-      <div class="documents" v-if="content.urlDocument">
-        <label for="urlDocument">Documentos</label>
-        <br />
-        <button>
-          <a :href="'http://localhost:8080' + content.urlDocument" target="_blank">{{
-            content.urlDocument
-          }}</a>
-        </button>
-      </div>
       <div
         v-if="content.type == 'Assets' || content.type == 'ClassRoom'"
         class="container-letras"
@@ -120,20 +125,6 @@ export default defineComponent({
           </div>
         </ul>
       </div>
-
-      <label for="urlVideo">Video do YouTube</label>
-      <div class="youtube-video">
-        <iframe
-          width="560"
-          height="315"
-          :src="content.urlVideo"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          referrerpolicy="strict-origin-when-cross-origin"
-          allowfullscreen
-        ></iframe>
-      </div>
     </div>
   </div>
 </template>
@@ -159,10 +150,39 @@ export default defineComponent({
   padding: 50px 10px;
 }
 
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+}
+.documents {
+  display: flex;
+  margin-top: 10px;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  text-align: center;
+  margin-top: 10px;
+  color: #249B9B;
+  font-weight: bold;
+}
+
 p {
   color: black;
   font-weight: bold;
+  text-align: center;
 }
+
+.icon {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto;
+}
+
 ul {
   text-align: center;
   margin-top: 10px;
@@ -191,15 +211,20 @@ ul {
   border-radius: 50%;
 }
 
-.youtube-video {
-  margin-top: 20px;
-  width: 100%;
-  height: 315px;
-  /* Altura padrão para vídeos do YouTube */
+.background {
+  background-color: #249B9B;
+  height: 15rem;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.documents {
-  margin-top: 20px;
+.youtube-video {
+  position: relative;
+  bottom: 0;
+  width: 90%;
+  height: 80%;
 }
 
 .documents > label {
