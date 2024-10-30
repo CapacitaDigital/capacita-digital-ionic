@@ -20,7 +20,7 @@ const modules = ref<Module[]>([]);
 
 onMounted(async () => {
     try {
-        const response = await fetch('http://localhost:8080/api/modules', {
+        const response = await fetch('https://idipibex.online/api/modules', {
             method: 'GET',
             headers: {
                 'accept': 'application/json',

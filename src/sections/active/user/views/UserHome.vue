@@ -21,7 +21,7 @@ const categorias = ref<Categoria[]>([]);
 
 const fetchCategorias = async () => {
   try {
-    const response = await fetch("http://localhost:8080/api/categories/", {
+    const response = await fetch("https://idipibex.online/api/categories/", {
       method: "GET",
       headers: {
         Accept: "application/json",

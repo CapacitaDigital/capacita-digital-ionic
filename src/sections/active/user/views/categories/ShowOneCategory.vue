@@ -20,7 +20,7 @@ const showModal = ref(false);
 onMounted(async () => {
   const categoryId = route.params.id; // Obtém o ID da categoria da rota
   try {
-    const response = await fetch(`http://localhost:8080/api/categories/${categoryId}`, {
+    const response = await fetch(`https://idipibex.online/api/categories/${categoryId}`, {
       method: "GET",
       headers: {
         accept: "application/json",

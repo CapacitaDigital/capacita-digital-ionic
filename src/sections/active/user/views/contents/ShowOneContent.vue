@@ -25,7 +25,7 @@ export default defineComponent({
 
     const fetchData = async (id: string) => {
       try {
-        const response = await fetch(`http://192.168.18.101:8080/api/contents/${id}`, {
+        const response = await fetch(`https://idipibex.online/api/contents/${id}`, {
           method: "GET",
           headers: {
             accept: "application/json",
