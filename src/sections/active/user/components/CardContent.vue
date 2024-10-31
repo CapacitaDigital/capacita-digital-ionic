@@ -1,6 +1,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
 export default defineComponent({
     props: {
@@ -15,7 +17,7 @@ export default defineComponent({
     },
     methods: {
         NextPage() {
-            window.location.href = `user/contents/${this.id}`;
+            router.push(`user/contents/${id}`);
 
         }
     }
