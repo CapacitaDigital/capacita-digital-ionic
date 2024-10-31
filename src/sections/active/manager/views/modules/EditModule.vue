@@ -9,7 +9,7 @@ const nivel = ref('');
 
 const deletarModulo = async (id: number) => {
     try {
-        const response = await fetch(`http://localhost:5158/api/modules/delete/${id}`, {
+        const response = await fetch(`https://idipibex.online/api/modules/delete/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const sendModuleToApi = async (module: {
     Nivel: string
 }) => {
     try {
-        const response = await fetch('http://localhost:5158/api/modules/edit', {
+        const response = await fetch('https://idipibex.online/api/modules/edit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

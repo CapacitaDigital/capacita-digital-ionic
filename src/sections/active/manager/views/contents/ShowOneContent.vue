@@ -49,7 +49,7 @@ export default defineComponent({
 
     const fetchData = async (id: string) => {
       try {
-        const response = await fetch(`http://localhost:8080/api/contents/${id}`, {
+        const response = await fetch(`https://idipibex.online/api/contents/${id}`, {
           method: "GET",
           headers: {
             accept: "application/json",
@@ -99,7 +99,7 @@ export default defineComponent({
     };
     const fetchUrlImages = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/images", {
+        const response = await fetch("https://idipibex.online/api/images", {
           method: "GET",
           headers: {
             accept: "application/json",
@@ -118,7 +118,7 @@ export default defineComponent({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const fetchUrlDocuments = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/documents/", {
+        const response = await fetch("https://idipibex.online/api/documents/", {
           method: "GET",
           headers: {
             accept: "application/json",
@@ -139,7 +139,7 @@ export default defineComponent({
     const remove = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/contents/${data.value.id}`,
+          `https://idipibex.online/api/contents/${data.value.id}`,
           {
             method: "DELETE",
             headers: {
@@ -163,7 +163,7 @@ export default defineComponent({
         serializeData();
         data.value.urlVideo = adjustUrlYoutube(data.value.urlVideo);
         const response = await fetch(
-          `http://localhost:8080/api/contents/${data.value.id}`,
+          `https://idipibex.online/api/contents/${data.value.id}`,
           {
             method: "PUT",
             headers: {
@@ -205,7 +205,7 @@ export default defineComponent({
       formData.append("file", file);
 
       try {
-        const response = await fetch(`http://localhost:8080/api/contents/upload`, {
+        const response = await fetch(`https://idipibex.online/api/contents/upload`, {
           method: "POST",
           body: formData,
         });
@@ -249,7 +249,7 @@ export default defineComponent({
 <template>
   <div class="container">
     <div class="fundo">
-      <img :src="'http://localhost:8080' + data.urlImage" :alt="data.urlImage" />
+      <img :src="'https://idipibex.online/api/' + data.urlImage" :alt="data.urlImage" />
     </div>
     <div class="form">
       <form @submit.prevent="updateData">

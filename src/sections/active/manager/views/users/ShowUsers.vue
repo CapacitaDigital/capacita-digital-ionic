@@ -13,7 +13,7 @@ export default defineComponent({
 
         const fetchUsers = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:5245/api/user/all');
+                const response = await fetch('https://idipibex.online/api/user/all');
                 if (!response.ok) {
                     throw new Error('Erro');
                 }
@@ -26,7 +26,7 @@ export default defineComponent({
         };
 
         const deleteUser = (id: any) => {
-            fetch(`http://localhost:5245/api/user/${id}`, { method: 'DELETE' })
+            fetch(`https://idipibex.online/api/user/${id}`, { method: 'DELETE' })
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Erro ao excluir usuário');

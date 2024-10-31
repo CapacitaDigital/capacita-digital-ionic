@@ -3,7 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { defineConfig } from 'vite'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -22,5 +21,16 @@ export default defineConfig({
       'technology': path.resolve(__dirname, './src/sections/disabled/technology'),
       'user': path.resolve(__dirname, './src/sections/active/user'),
     },
-  }
+  },
+
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://idipibex.online/api/',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+    },
+  },
 })

@@ -13,7 +13,7 @@ onMounted(async () => {
   const id = $route.params.id;
 
   try {
-    const response = await fetch(`http://localhost:8080/api/modules/categories/${id}`, {
+    const response = await fetch(`https://idipibex.online/api/modules/categories/${id}`, {
       method: "GET",
       headers: {
         accept: "application/json",

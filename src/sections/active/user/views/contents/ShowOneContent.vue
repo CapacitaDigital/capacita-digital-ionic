@@ -7,6 +7,11 @@ import { defineComponent, onMounted, ref } from "vue";
 import VideoAula from "../../components/contents/Video.vue";
 import { useRoute } from "vue-router";
 
+
+function rodarVideo(videoRef) {
+  videoRef.value?.scrollIntoView({ behavior: "smooth" });
+}
+
 export default defineComponent({
   setup() {
     const content = ref({
@@ -21,9 +26,12 @@ export default defineComponent({
       urlsDocuments: [],
       moduleId: 0,
     });
-    const route = useRoute();
 
-    const fetchData = async (id: string) => {
+    const route = useRoute();
+    const showVideo = ref(false);
+    const videoRef = ref(null);
+
+    const fetchData = async (id) => {
       try {
         const response = await fetch(`https://idipibex.online/api/contents/${id}`, {
           method: "GET",
@@ -44,35 +52,49 @@ export default defineComponent({
           "document"
         );
         content.value.urlImage = adjusteUrlFiles(content.value.urlImage, "image");
-        content.value.activityData = deserializecontent(result.activityData); 
+        content.value.activityData = deserializecontent(result.activityData);
       } catch (error) {
         console.error(error);
       }
     };
+
+    function handleVideoClick() {
+      showVideo.value = !showVideo.value;
+      rodarVideo(videoRef);
+    }
 
     onMounted(() => {
       const id = Array.isArray(route.params.id) ? route.params.id[0] : route.params.id;
       fetchData(id);
     });
 
-    return { content, falar, verifica, start };
+    return {
+      content,
+      showVideo,
+      handleVideoClick,
+      videoRef,
+    };
   },
-});
+}); 
+
 </script>
 
 <template>
-  <div class="containe">
-    <div class="background">
-          <iframe class="youtube-video"
-              width="560"
-              height="315"
-              :src="content.urlVideo"
-              title="YouTube video player"
-              frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
-          ></iframe>
+   <div class="containe">
+      <div class="background" v-if="showVideo">
+        <iframe
+          class="youtube-video"
+          width="560"
+          height="315"
+          :src="content.urlVideo"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+          ref="videoRef"
+        ></iframe>
+      </div>
     </div>
 
     <div class="form">
@@ -81,9 +103,12 @@ export default defineComponent({
         <p class="description">{{ content.description }}</p>
 
         <div class="documents" v-if="content.urlDocument">
-            <a :href="'http://localhost:8080' + content.urlDocument" target="_blank">
+            <a :href="'https://idipibex.online/api' + content.urlDocument" target="_blank">
               <img class="icon" src="img/icons/pdf.svg"> 
             </a>
+            <div @click="handleVideoClick">
+              <img action class="iconImg" src="img/icons/video.png" />
+            </div>
         </div>
       </div>
 
@@ -97,10 +122,10 @@ export default defineComponent({
             <button
               @click="() => falar(String(letra))"
               v-if="type != 'urlSounds'"
-              :class="type"
+              :class="[type, { 'active-video': showVideo }]"
               v-for="(letra, index) in prop"
               :key="index"
-            >
+              >
               {{ letra }}
             </button>
           </div>
@@ -116,7 +141,7 @@ export default defineComponent({
             <button
               @click="() => verifica(String(letra), content.moduleId)"
               v-if="type != 'urlSounds'"
-              :class="type"
+              :class="[type, { 'active-video': showVideo }]"
               v-for="(letra, index) in prop"
               :key="index"
             >
@@ -126,7 +151,6 @@ export default defineComponent({
         </ul>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
@@ -183,6 +207,12 @@ p {
   margin: 0 auto;
 }
 
+.iconImg {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+
 ul {
   text-align: center;
   margin-top: 10px;
@@ -202,13 +232,20 @@ ul {
   padding: 0px;
   margin: 0px;
   background-color: white;
-  height: 80px;
-  width: 80px;
+  height: 65px;
+  width: 65px;
   color: black;
   font-size: 50px;
   font-weight: 200;
   border: 1px solid black;
   border-radius: 50%;
+}
+
+.active-video {
+  height: 50px;
+  width: 50px;
+  font-size: 40px;
+  transform: scale(1.05);
 }
 
 .background {
@@ -253,7 +290,7 @@ ul {
 
 button:hover {
   transition: 0.5s;
-  background-color: brown;
+  background-color: #249B9B;
 }
 
 .youtube-video iframe {
@@ -302,7 +339,7 @@ form {
 }
 
 input {
-  border: 2px solid brown;
+  border: 2px solid #249B9B;
   color: #2e2e2e;
   border-radius: 5px;
   padding: 5px;
@@ -310,8 +347,8 @@ input {
 }
 
 input:focus {
-  background-color: brown;
-  border: 2px solid brown;
+  background-color: #249B9B;
+  border: 2px solid #249B9B;
   color: white;
   border-radius: 5px;
   padding: 5px;
@@ -369,7 +406,7 @@ input:focus {
 }
 
 select {
-  border: 2px solid brown;
+  border: 2px solid #249B9B;
   color: #2e2e2e;
   border-radius: 5px;
   padding: 5px;
@@ -385,6 +422,6 @@ button {
   font-weight: 600;
   border-radius: 5px;
   color: white;
-  background-color: brown;
+  background-color: #249B9B;
 }
 </style>

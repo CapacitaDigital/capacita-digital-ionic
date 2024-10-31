@@ -22,7 +22,7 @@ const registerUser = async () => {
 
 const sendUserToAPI = async (user: any) => {
     try {
-        const response = await fetch('http://127.0.0.1:5245/api/user', {
+        const response = await fetch('https://idipibex.online/api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

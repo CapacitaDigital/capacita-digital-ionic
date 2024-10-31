@@ -20,7 +20,7 @@ const sendModuleToApi = async (module: {
     Nivel: string
 }) => {
     try {
-        const response = await fetch('http://localhost:5158/api/modules/', {
+        const response = await fetch('https://idipibex.online/api/modules/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

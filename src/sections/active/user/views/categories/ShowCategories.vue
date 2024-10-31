@@ -19,14 +19,15 @@ onMounted(async () => {
       headers: {
         accept: "application/json",
       },
-    });
+    })
+    
     if (!response.ok) {
       throw new Error("Erro ao buscar categorias");
     }
     const data = await response.json();
     categorias.value = data;
   } catch (error) {
-    console.error(error);
+    console.error("http://idipibex.online/api/categories");
   }
 });
 </script>

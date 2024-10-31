@@ -22,7 +22,7 @@ export default defineComponent({
 
     onMounted(async () => {
       try {
-        const response = await fetch(`http://localhost:8080/api/modules`, {
+        const response = await fetch(`https://idipibex.online/api/modules`, {
           method: "GET",
           headers: {
             accept: "application/json",
@@ -61,7 +61,7 @@ export default defineComponent({
       formData.append("file", file);
 
       try {
-        const response = await fetch(`http://localhost:8080/api/contents/upload`, {
+        const response = await fetch(`https://idipibex.online/api/contents/upload`, {
           method: "POST",
           body: formData,
         });
@@ -88,7 +88,7 @@ export default defineComponent({
         ); // Array de Promises que retorna um array de strings com os paths dos documentos enviados para o servidor
         serializeActivityData();
         data.value.urlVideo = adjustUrlYoutube(data.value.urlVideo);
-        const response = await fetch(`http://localhost:8080/api/contents`, {
+        const response = await fetch(`https://idipibex.online/api/contents`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

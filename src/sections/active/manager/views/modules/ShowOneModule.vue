@@ -11,7 +11,7 @@ const showModal = ref(false);
 onMounted(async () => {
     const moduleId = route.params.id; 
     try {
-        const response = await fetch(`http://localhost:8080/api/modules/${moduleId}`, {
+        const response = await fetch(`https://idipibex.online/api/modules/${moduleId}`, {
             method: 'GET',
             headers: {
                 'accept': 'application/json',
