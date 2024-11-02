@@ -17,7 +17,7 @@ export default defineComponent({
     },
     methods: {
         NextPage() {
-            router.push(`user/contents/${id}`);
+            window.location.href = `user/contents/${this.id}`
 
         }
     }
