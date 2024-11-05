@@ -106,7 +106,7 @@ export default defineComponent({
         <p class="description">{{ content.description }}</p>
 
         <div class="documents" v-if="content.urlDocument">
-            <a :href="'https://idipibex.online/api' + content.urlDocument" target="_blank">
+            <a :href="'https://idipibex.online' + content.urlDocument" target="_blank">
               <img class="icon" src="img/icons/pdf.svg"> 
             </a>
             <div @click="handleVideoClick">
