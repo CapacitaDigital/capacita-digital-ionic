@@ -73,6 +73,9 @@ export default defineComponent({
       showVideo,
       handleVideoClick,
       videoRef,
+      falar,
+      verifica,
+      start,
     };
   },
 }); 
